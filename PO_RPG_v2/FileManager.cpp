@@ -1,6 +1,13 @@
 #include "stdafx.h"
 #include "FileManager.h"
 
+FileManager::FileManager() {
+	savesName = "superSecretFile.txt";
+}
+
+FileManager::~FileManager() {
+	savesName = "";
+}
 
 void FileManager::saveGame(Player* player, std::string fileName) {
 	std::ofstream save;
@@ -26,6 +33,9 @@ void FileManager::saveGame(Player* player, std::string fileName) {
 	{
 		save << bp[i];
 	}
+	save.close();
+	save.open(savesName,std::ios::app);
+	save << fileName << std::endl;
 	save.close();
 
 }

@@ -1,4 +1,7 @@
 #pragma once
+#include "FileManager.h"
+#include <string>
+#include <fstream>
 
 namespace PORPGv2 {
 
@@ -41,6 +44,11 @@ namespace PORPGv2 {
 
 	private: System::Windows::Forms::Button^  exitButton;
 
+	private: System::Windows::Forms::Button^  startGameButton;
+	private: System::Windows::Forms::ComboBox^  comboBox1;
+
+
+
 
 
 
@@ -64,6 +72,8 @@ namespace PORPGv2 {
 			this->newGameButton = (gcnew System::Windows::Forms::Button());
 			this->loadButton = (gcnew System::Windows::Forms::Button());
 			this->exitButton = (gcnew System::Windows::Forms::Button());
+			this->startGameButton = (gcnew System::Windows::Forms::Button());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->SuspendLayout();
 			// 
 			// newGameButton
@@ -105,6 +115,29 @@ namespace PORPGv2 {
 			this->exitButton->UseVisualStyleBackColor = true;
 			this->exitButton->Click += gcnew System::EventHandler(this, &windowManager::button3_Click);
 			// 
+			// startGameButton
+			// 
+			this->startGameButton->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->startGameButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->startGameButton->Location = System::Drawing::Point(400, 473);
+			this->startGameButton->Name = L"startGameButton";
+			this->startGameButton->Size = System::Drawing::Size(200, 75);
+			this->startGameButton->TabIndex = 4;
+			this->startGameButton->Text = L"Start";
+			this->startGameButton->UseVisualStyleBackColor = true;
+			this->startGameButton->Visible = false;
+			this->startGameButton->Click += gcnew System::EventHandler(this, &windowManager::startGameButton_Click);
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Location = System::Drawing::Point(400, 220);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(199, 24);
+			this->comboBox1->TabIndex = 5;
+			this->comboBox1->Visible = false;
+			// 
 			// windowManager
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -112,6 +145,8 @@ namespace PORPGv2 {
 			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(982, 753);
+			this->Controls->Add(this->comboBox1);
+			this->Controls->Add(this->startGameButton);
 			this->Controls->Add(this->exitButton);
 			this->Controls->Add(this->loadButton);
 			this->Controls->Add(this->newGameButton);
@@ -122,15 +157,33 @@ namespace PORPGv2 {
 
 		}
 #pragma endregion
-	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+
 	}
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->DestroyHandle();
+	}
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		std::ifstream file;
+		std::string line;
+		FileManager *f = new FileManager();
+		file.open(f->savesName);
+		while (!file.eof()) {
+			getline(file, line);
+			const char *tmp = line.c_str();
+			System::String^ save = gcnew String(tmp);
+			this->comboBox1->Items->Add(save);
 
-}
-private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+		}
+		this->newGameButton->Visible = false;
+		this->loadButton->Visible = false;
+		this->exitButton->Visible = false;
+		this->comboBox1->Visible = true;
+		this->startGameButton->Visible = true;
+	}
 
-}
-private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }
