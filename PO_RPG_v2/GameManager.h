@@ -12,7 +12,7 @@ private:
 	bool gameRunning;
 public:
 	GameManager();
-	virtual ~GameManager();
+	~GameManager();
 	bool isGameRunning() const { return this->gameRunning; };
 	void gameMenu();
 	void goToDangeon(Player player);

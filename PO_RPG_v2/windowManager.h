@@ -2,6 +2,7 @@
 #include "FileManager.h"
 #include <string>
 #include <fstream>
+#include <msclr\marshal_cppstd.h>
 
 namespace PORPGv2 {
 
@@ -176,6 +177,7 @@ namespace PORPGv2 {
 			this->comboBox1->Items->Add(save);
 
 		}
+		file.close();
 		this->newGameButton->Visible = false;
 		this->loadButton->Visible = false;
 		this->exitButton->Visible = false;
@@ -183,7 +185,11 @@ namespace PORPGv2 {
 		this->startGameButton->Visible = true;
 	}
 
-private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e) {
-}
-};
+	private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		System::Object^ choose = comboBox1->SelectedItem;
+		System::String^ name = choose->ToString();
+		std::string sname = msclr::interop::marshal_as<std::string>(name);
+
+	}
+	};
 }
