@@ -15,8 +15,8 @@ public:
 	void setDifficult(int lvl);
 	std::string getName();
 	int getDifficult();
-	void spawnEnemy(std::vector<Enemy> enemy);
-	void spawnNpc(std::vector<Npc> npc);
+	std::vector<Enemy*> spawnEnemy(int count);
+	std::vector<Npc*> spawnNpc(int count);
 };
 
 #endif

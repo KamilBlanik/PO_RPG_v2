@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "MapGenerator.h"
 
-void MapGenerator::spawnEnemy(std::vector<Enemy> enemy) {
+std::vector<Enemy*> MapGenerator::spawnEnemy(int count) {
 
 }
 
-void MapGenerator::spawnNpc(std::vector<Npc>  npc) {
-
+std::vector<Npc*> MapGenerator::spawnNpc(int count) {
+	std::string name[5] = { "A","B","C","D","E" };
+	std::string type[2] = { "Handlarz","Nauczyciel" };
+	
 }
 
 void MapGenerator::setName(std::string name) {
