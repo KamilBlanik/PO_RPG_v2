@@ -8,11 +8,16 @@
 #include "Items.h"
 
 class Enemy : public Character {
+private:
+	
+	std::vector<Items*> loot;
+
 public:
 	Enemy();
-	~Enemy();
-	std::vector<Items*> loot;
-	Items* dropItem(Items* loot);
+	~Enemy();	
+	Items* dropItem();
+	std::vector<Items*> getLoot();
+	void setLoot(std::vector<Items*> loot);
 };
 
 #endif

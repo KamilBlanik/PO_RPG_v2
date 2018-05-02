@@ -1,5 +1,6 @@
 #pragma once
 #include "FileManager.h"
+#include "GameManager.h"
 #include <string>
 #include <fstream>
 #include <msclr\marshal_cppstd.h>
@@ -47,6 +48,10 @@ namespace PORPGv2 {
 
 	private: System::Windows::Forms::Button^  startGameButton;
 	private: System::Windows::Forms::ComboBox^  comboBox1;
+	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::Button^  startButton;
+	private: System::Windows::Forms::PictureBox^  pictureBox1;
+
 
 
 
@@ -75,6 +80,10 @@ namespace PORPGv2 {
 			this->exitButton = (gcnew System::Windows::Forms::Button());
 			this->startGameButton = (gcnew System::Windows::Forms::Button());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->startButton = (gcnew System::Windows::Forms::Button());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// newGameButton
@@ -139,28 +148,74 @@ namespace PORPGv2 {
 			this->comboBox1->TabIndex = 5;
 			this->comboBox1->Visible = false;
 			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(386, 333);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(230, 22);
+			this->textBox1->TabIndex = 6;
+			this->textBox1->Text = L"Wprowadz imie Twojego bohatera";
+			this->textBox1->Visible = false;
+			// 
+			// startButton
+			// 
+			this->startButton->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->startButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->startButton->Location = System::Drawing::Point(400, 369);
+			this->startButton->Name = L"startButton";
+			this->startButton->Size = System::Drawing::Size(200, 75);
+			this->startButton->TabIndex = 7;
+			this->startButton->Text = L"Start";
+			this->startButton->UseVisualStyleBackColor = true;
+			this->startButton->Visible = false;
+			this->startButton->Click += gcnew System::EventHandler(this, &windowManager::button1_Click_1);
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.BackgroundImage")));
+			this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->pictureBox1->Location = System::Drawing::Point(0, 0);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(982, 753);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+			this->pictureBox1->TabIndex = 8;
+			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Visible = false;
+			// 
 			// windowManager
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
+			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(982, 753);
+			this->Controls->Add(this->startButton);
+			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->startGameButton);
 			this->Controls->Add(this->exitButton);
 			this->Controls->Add(this->loadButton);
 			this->Controls->Add(this->newGameButton);
+			this->Controls->Add(this->pictureBox1);
 			this->Name = L"windowManager";
 			this->ShowIcon = false;
 			this->Text = L"DungeonExplorer";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
 
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-
+		this->startButton->Visible = true;
+		this->textBox1->Visible = true;
+		this->newGameButton->Visible = false;
+		this->loadButton->Visible = false;
+		this->exitButton->Visible = false;
+		
 	}
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->DestroyHandle();
@@ -189,7 +244,22 @@ namespace PORPGv2 {
 		System::Object^ choose = comboBox1->SelectedItem;
 		System::String^ name = choose->ToString();
 		std::string sname = msclr::interop::marshal_as<std::string>(name);
+		this->startGameButton->Visible = false;
+		this->comboBox1->Visible = false;
+		this->pictureBox1->Visible = true;
 
 	}
-	};
+	private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
+		System::Object^ name = textBox1->GetType();
+		System::String^ pName = name->ToString();
+		std::string playerName = msclr::interop::marshal_as<std::string>(pName);
+		Player* player = new Player();
+		GameManager* game = new GameManager();
+		player->setName(playerName);
+		game->goToCity(player);
+		this->textBox1->Visible = false;
+		this->startButton->Visible = false;
+		this->pictureBox1->Visible = true;
+	}
+};
 }

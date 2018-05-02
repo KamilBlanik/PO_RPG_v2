@@ -170,6 +170,12 @@
       <DependentUpon>windowManager.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\bg.jpg" />
+    <Image Include="..\city.jpg" />
+    <Image Include="..\images.jpg" />
+    <Image Include="..\logo.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

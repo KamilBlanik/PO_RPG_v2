@@ -4,21 +4,21 @@
 
 
 GameManager::GameManager() {
-	gameRunning = true;
+	player = new Player();
 }
 
 GameManager::~GameManager() {
 	
 }
-void GameManager::gameMenu() {
-	std::cout << "GAME MENU\n";
+
+
+void GameManager::goToDangeon(Player* player) {
+	this->player = player;
 }
 
-void GameManager::goToDangeon(Player player) {
-	choice = 1;
-}
+void GameManager::goToCity(Player *player) {
+	
+	this->player = player;
 
-void GameManager::goToCity(Player player) {
-	choice = 2;
 }
 

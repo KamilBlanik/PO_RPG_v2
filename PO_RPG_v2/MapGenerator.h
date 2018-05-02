@@ -8,17 +8,29 @@
 #include <vector>
 
 class MapGenerator {
+private:
 	std::string name;
 	int difficult;
+	std::vector<Npc*> npcs;
+	std::vector<Enemy*> enemies;
+
+	std::vector<Enemy*> spawnEnemies(int count);
+	std::vector<Npc*> spawnNpcs(int count);
+	Items* generateItem();
+	Skills* generateSkill();
+	
 public:
 	void setName(std::string name);
 	void setDifficult(int lvl);
+	void setEnemies(std::vector<Enemy*> vec);
+	void setNpcs(std::vector<Npc*> vec);
+	std::vector<Enemy*> getEnemies();
+	std::vector<Npc*> getNpcs();
 	std::string getName();
 	int getDifficult();
-	std::vector<Enemy*> spawnEnemy(int count);
-	std::vector<Npc*> spawnNpc(int count);
-	Items* generateItem();
-	Skills* generateSkill();
+	MapGenerator* generateCity();
+	MapGenerator* generateDungeon();
+	
 };
 
 #endif

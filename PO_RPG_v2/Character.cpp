@@ -11,6 +11,7 @@ Character::Character() {
 	armor = 0;
 	baseDmg = 10;
 	bonusDmg = 0;
+	bonusArmor = 0;
 	skill.clear();
 
 }
@@ -24,6 +25,7 @@ Character::~Character() {
 	armor = 0;
 	baseDmg = 0;
 	bonusDmg = 0;
+	bonusArmor = 0;
 	skill.clear();
 }
 

@@ -4,19 +4,18 @@
 #include <iostream>
 #include "stdafx.h"
 #include "Player.h"
+#include "MapGenerator.h"
 
 
 class GameManager {
 private:
-	int choice;
-	bool gameRunning;
+	Player * player;
+
 public:
 	GameManager();
 	~GameManager();
-	bool isGameRunning() const { return this->gameRunning; };
-	void gameMenu();
-	void goToDangeon(Player player);
-	void goToCity(Player player);
+	void goToDangeon(Player* player);
+	void goToCity(Player* player);
 };
 
 #endif

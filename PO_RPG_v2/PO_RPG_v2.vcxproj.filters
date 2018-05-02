@@ -99,4 +99,23 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="windowManager.resx">
+      <Filter>Pliki zasobów</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\bg.jpg">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\city.jpg">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\images.jpg">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="..\logo.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
