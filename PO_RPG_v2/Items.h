@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include "stdafx.h"
+#include "time.h"
 
 class Items {
 private:

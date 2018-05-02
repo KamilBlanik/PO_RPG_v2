@@ -29,9 +29,9 @@ public:
 	std::vector<Items*> getItems();
 	std::vector<Skills*> getSkills();
 
-	void sell(Items* item);
-	void buy(Items* item);
-	void learn(Skills* skill);
+	Items* sell(Items* item);
+	int buy(Items* item);
+	Skills* learn(Skills* skill);
 
 };
 

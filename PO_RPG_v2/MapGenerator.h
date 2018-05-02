@@ -17,6 +17,8 @@ public:
 	int getDifficult();
 	std::vector<Enemy*> spawnEnemy(int count);
 	std::vector<Npc*> spawnNpc(int count);
+	Items* generateItem();
+	Skills* generateSkill();
 };
 
 #endif

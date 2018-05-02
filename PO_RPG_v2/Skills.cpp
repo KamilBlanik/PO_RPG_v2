@@ -1,6 +1,14 @@
 #include "stdafx.h"
 #include "Skills.h"
 
+Skills::Skills(std::string name, std::string type, int value, int price, int skillLevel) {
+	this->name = name;
+	this->type = type;
+	this->value = value;
+	this->price = price;
+	this->skillLevel = skillLevel;
+}
+
 Skills::Skills() {
 	name = "Nieznany";
 	type = "Nieznany";
