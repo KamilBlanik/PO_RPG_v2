@@ -193,9 +193,9 @@ namespace PORPGv2 {
 			// 
 			// textBox1
 			// 
-			this->textBox1->Location = System::Drawing::Point(400, 331);
+			this->textBox1->Location = System::Drawing::Point(392, 331);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(200, 22);
+			this->textBox1->Size = System::Drawing::Size(216, 22);
 			this->textBox1->TabIndex = 6;
 			this->textBox1->Text = L"Wprowadz imie Twojego bohatera";
 			this->textBox1->Visible = false;
@@ -253,6 +253,7 @@ namespace PORPGv2 {
 			this->button2->Text = L"Wroc do menu";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Visible = false;
+			this->button2->Click += gcnew System::EventHandler(this, &windowManager::button2_Click_1);
 			// 
 			// button3
 			// 
@@ -385,7 +386,6 @@ namespace PORPGv2 {
 			this->label1->TabIndex = 21;
 			this->label1->Text = L"Imie:\r\nKto to:\r\nIlosc pieniedzy:\r\nPrzedmioty/umiejetnosci:";
 			this->label1->Visible = false;
-			//this->label1->Click += gcnew System::EventHandler(this, &windowManager::label1_Click);
 			// 
 			// label2
 			// 
@@ -449,15 +449,16 @@ namespace PORPGv2 {
 			// button13
 			// 
 			this->button13->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->button13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->button13->Location = System::Drawing::Point(736, 638);
 			this->button13->Name = L"button13";
 			this->button13->Size = System::Drawing::Size(200, 75);
 			this->button13->TabIndex = 27;
-			this->button13->Text = L"Uciekaj";
+			this->button13->Text = L"Odpusc i udaj sie do miasta";
 			this->button13->UseVisualStyleBackColor = true;
 			this->button13->Visible = false;
+			this->button13->Click += gcnew System::EventHandler(this, &windowManager::button13_Click);
 			// 
 			// button14
 			// 
@@ -471,6 +472,7 @@ namespace PORPGv2 {
 			this->button14->Text = L"Walcz";
 			this->button14->UseVisualStyleBackColor = true;
 			this->button14->Visible = false;
+			this->button14->Click += gcnew System::EventHandler(this, &windowManager::button14_Click);
 			// 
 			// pictureBox2
 			// 
@@ -578,6 +580,21 @@ namespace PORPGv2 {
 			this->startGameButton->Visible = false;
 			this->comboBox1->Visible = false;
 			this->pictureBox1->Visible = true;
+			this->button1->Visible = true;
+			this->button2->Visible = true;
+			this->button3->Visible = true;
+			this->button4->Visible = true;
+			this->button5->Visible = true;
+			this->button6->Visible = true;
+			this->button7->Visible = true;
+			this->button8->Visible = true;
+			this->button9->Visible = true;
+			this->comboBox2->Visible = true;
+			this->comboBox3->Visible = true;
+			this->comboBox4->Visible = true;
+			this->label1->Visible = true;
+			this->label2->Visible = true;
+			this->label3->Visible = true;
 		}
 
 	}
@@ -605,6 +622,8 @@ namespace PORPGv2 {
 		this->comboBox3->Visible = true;
 		this->comboBox4->Visible = true;
 		this->label1->Visible = true;
+		this->label2->Visible = true;
+		this->label3->Visible = true;
 	}
 
 
@@ -622,8 +641,71 @@ namespace PORPGv2 {
 		this->comboBox3->Visible = false;
 		this->comboBox4->Visible = false;
 		this->label1->Visible = false;
+		this->label2->Visible = false;
+		this->label3->Visible = false;
 		this->pictureBox1->Visible = false;
+
 		this->pictureBox2->Visible = true;
+		this->button10->Visible = true;
+		this->button11->Visible = true;
+		this->button12->Visible = true;
+		this->button13->Visible = true;
+		this->button14->Visible = true;
+		this->button10->Enabled = false;
+		this->button11->Enabled = false;
+		this->button12->Enabled = false;
 	}
-	};
+	private: System::Void button14_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->button10->Enabled = true;
+		this->button11->Enabled = true;
+		this->button12->Enabled = true;
+		this->button13->Enabled = false;
+		this->button14->Enabled = false;
+	}
+	private: System::Void button13_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->pictureBox1->Visible = true;
+		this->button1->Visible = true;
+		this->button2->Visible = true;
+		this->button3->Visible = true;
+		this->button4->Visible = true;
+		this->button5->Visible = true;
+		this->button6->Visible = true;
+		this->button7->Visible = true;
+		this->button8->Visible = true;
+		this->button9->Visible = true;
+		this->button10->Visible = false;
+		this->button11->Visible = false;
+		this->button12->Visible = false;
+		this->button13->Visible = false;
+		this->button14->Visible = false;
+		this->comboBox2->Visible = true;
+		this->comboBox3->Visible = true;
+		this->comboBox4->Visible = true;
+		this->label1->Visible = true;
+		this->label2->Visible = true;
+		this->label3->Visible = true;
+	}
+	private: System::Void button2_Click_1(System::Object^  sender, System::EventArgs^  e) {
+		this->button1->Visible = false;
+		this->button2->Visible = false;
+		this->button3->Visible = false;
+		this->button4->Visible = false;
+		this->button5->Visible = false;
+		this->button6->Visible = false;
+		this->button7->Visible = false;
+		this->button8->Visible = false;
+		this->button9->Visible = false;
+		this->comboBox2->Visible = false;
+		this->comboBox3->Visible = false;
+		this->comboBox4->Visible = false;
+		this->label1->Visible = false;
+		this->label2->Visible = false;
+		this->label3->Visible = false;
+		this->pictureBox1->Visible = false;
+
+		this->newGameButton->Visible = true;
+		this->loadButton->Visible = true;
+		this->exitButton->Visible = true;
+	}
+};
 }
