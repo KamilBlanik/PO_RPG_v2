@@ -26,7 +26,7 @@ std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
 		}
 		enemy->setLoot(loot);
 		enemies.push_back(enemy);
-	}	
+	}
 
 	return enemies;
 }
@@ -38,9 +38,10 @@ std::vector<Npc*> MapGenerator::spawnNpcs(int count) {
 	std::vector<Skills*> skills;
 	std::vector<Npc*> npcs;
 	int money = 500;
+	srand(time(NULL));
 	for (int c = 0; c < count; c++)
 	{
-		srand(time(NULL));
+		
 		int i = rand() % 2;
 		int j = rand() % 5;
 		switch (i)
@@ -162,7 +163,7 @@ Skills* MapGenerator::generateSkill() {
 }
 
 MapGenerator* MapGenerator::generateCity() {
-	MapGenerator* map;
+	MapGenerator* map = new MapGenerator();
 	std::string cityName[5] = { "Wroclaw","Rybink","Kielce","Warszawa","Radom" };
 	srand(time(NULL));
 	int i = rand() % 5;
@@ -171,19 +172,19 @@ MapGenerator* MapGenerator::generateCity() {
 	map->setName(cityName[i]);
 	map->setDifficult(0);
 	map->setNpcs(spawnNpcs(j));
-	
+
 	return map;
 }
 
 MapGenerator* MapGenerator::generateDungeon() {
-	MapGenerator* dungeon;
+	MapGenerator* dungeon = new MapGenerator();
 	std::string dungeonName[5] = { "Podziemia klasztoru","Katakumby Majow","Piwnica w bloku","Lochy zamku","Opuszczona kopalnia" };
 	srand(time(NULL));
 	int i = rand() % 5;
 	int j = rand() % 4 + 2;
-
+	int lvl = rand() % 11;
 	dungeon->setName(dungeonName[i]);
-	//dungeon->setDifficult(0);
+	dungeon->setDifficult(lvl);
 	dungeon->setEnemies(spawnEnemies(j));
 	return dungeon;
 }

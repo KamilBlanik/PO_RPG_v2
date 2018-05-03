@@ -5,8 +5,8 @@ Player::Player() {
 	experience = 0;
 	skillPoints = 0;
 	money = 0;
-	inventory.clear();
-	backpack.clear();
+	inventory.empty();
+	backpack.empty();
 	
 }
 

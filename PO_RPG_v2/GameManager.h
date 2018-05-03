@@ -10,12 +10,14 @@
 class GameManager {
 private:
 	Player * player;
-
+	MapGenerator* map;
 public:
 	GameManager();
 	~GameManager();
 	void goToDangeon(Player* player);
 	void goToCity(Player* player);
+	MapGenerator* getMap();
+	Player* getPlayer();
 };
 
 #endif

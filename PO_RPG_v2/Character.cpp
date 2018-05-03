@@ -12,7 +12,7 @@ Character::Character() {
 	baseDmg = 10;
 	bonusDmg = 0;
 	bonusArmor = 0;
-	skill.clear();
+	skill.empty();
 
 }
 

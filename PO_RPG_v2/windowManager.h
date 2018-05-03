@@ -72,10 +72,12 @@ namespace PORPGv2 {
 	private: System::Windows::Forms::Button^  button13;
 	private: System::Windows::Forms::Button^  button14;
 	private: System::Windows::Forms::PictureBox^  pictureBox2;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Label^  label5;
 
 
 
-
+	private: GameManager * game = new GameManager();
 
 
 
@@ -125,6 +127,8 @@ namespace PORPGv2 {
 			this->button13 = (gcnew System::Windows::Forms::Button());
 			this->button14 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
@@ -320,6 +324,7 @@ namespace PORPGv2 {
 			this->button7->Text = L"Podejdz do:";
 			this->button7->UseVisualStyleBackColor = true;
 			this->button7->Visible = false;
+			this->button7->Click += gcnew System::EventHandler(this, &windowManager::button7_Click);
 			// 
 			// comboBox2
 			// 
@@ -486,6 +491,26 @@ namespace PORPGv2 {
 			this->pictureBox2->TabStop = false;
 			this->pictureBox2->Visible = false;
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(415, 9);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(124, 17);
+			this->label4->TabIndex = 30;
+			this->label4->Text = L"Trafiles do miasta:";
+			this->label4->Visible = false;
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(415, 80);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(168, 51);
+			this->label5->TabIndex = 31;
+			this->label5->Text = L"Natrafiles na przeciwnika!\r\nNazwa:\r\nPoziom:";
+			this->label5->Visible = false;
+			// 
 			// windowManager
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -493,6 +518,8 @@ namespace PORPGv2 {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(982, 753);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
 			this->Controls->Add(this->button14);
 			this->Controls->Add(this->button13);
 			this->Controls->Add(this->button12);
@@ -565,6 +592,7 @@ namespace PORPGv2 {
 	}
 
 	private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		
 		System::Object^ choose = comboBox1->SelectedItem;
 		if (!choose)
 		{
@@ -577,6 +605,7 @@ namespace PORPGv2 {
 		else {
 			System::String^ name = choose->ToString();
 			std::string sname = msclr::interop::marshal_as<std::string>(name);
+			
 			this->startGameButton->Visible = false;
 			this->comboBox1->Visible = false;
 			this->pictureBox1->Visible = true;
@@ -595,6 +624,7 @@ namespace PORPGv2 {
 			this->label1->Visible = true;
 			this->label2->Visible = true;
 			this->label3->Visible = true;
+			this->label4->Visible = true;
 		}
 
 	}
@@ -603,9 +633,21 @@ namespace PORPGv2 {
 		System::String^ pName = name->ToString();
 		std::string playerName = msclr::interop::marshal_as<std::string>(pName);
 		Player* player = new Player();
-		GameManager* game = new GameManager();
 		player->setName(playerName);
 		game->goToCity(player);
+		MapGenerator* city = game->getMap();
+		std::vector<Npc*> npcs = city->getNpcs();
+		for (int i = 0; i < npcs.size(); i++)
+		{
+			std::string name = npcs[i]->getName();
+			std::string type = npcs[i]->getType();
+			std::string tmp = type + " " + name;
+			const char *tmp2 = tmp.c_str();
+			System::String^ npc = gcnew String(tmp2);
+			this->comboBox2->Items->Add(npc);
+		}
+		
+
 		this->textBox1->Visible = false;
 		this->startButton->Visible = false;
 		this->pictureBox1->Visible = true;
@@ -624,6 +666,7 @@ namespace PORPGv2 {
 		this->label1->Visible = true;
 		this->label2->Visible = true;
 		this->label3->Visible = true;
+		this->label4->Visible = true;
 	}
 
 
@@ -643,6 +686,8 @@ namespace PORPGv2 {
 		this->label1->Visible = false;
 		this->label2->Visible = false;
 		this->label3->Visible = false;
+		this->label4->Visible = false;
+		this->label5->Visible = true;
 		this->pictureBox1->Visible = false;
 
 		this->pictureBox2->Visible = true;
@@ -663,7 +708,10 @@ namespace PORPGv2 {
 		this->button14->Enabled = false;
 	}
 	private: System::Void button13_Click(System::Object^  sender, System::EventArgs^  e) {
+		
+		game->goToCity(game->getPlayer());
 		this->pictureBox1->Visible = true;
+		this->pictureBox2->Visible = false;
 		this->button1->Visible = true;
 		this->button2->Visible = true;
 		this->button3->Visible = true;
@@ -684,6 +732,8 @@ namespace PORPGv2 {
 		this->label1->Visible = true;
 		this->label2->Visible = true;
 		this->label3->Visible = true;
+		this->label4->Visible = true;
+		this->label5->Visible = false;
 	}
 	private: System::Void button2_Click_1(System::Object^  sender, System::EventArgs^  e) {
 		this->button1->Visible = false;
@@ -707,5 +757,8 @@ namespace PORPGv2 {
 		this->loadButton->Visible = true;
 		this->exitButton->Visible = true;
 	}
+private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+}
 };
 }
