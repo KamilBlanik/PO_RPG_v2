@@ -55,7 +55,7 @@ std::vector<Npc*> MapGenerator::spawnNpcs(int count) {
 			}
 		}
 				break;
-		case 2: {
+		case 1: {
 			int icount = rand() % 3 + 1;
 			for (int k = 0; k < icount; k++)
 			{
