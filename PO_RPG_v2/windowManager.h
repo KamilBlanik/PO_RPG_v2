@@ -560,6 +560,32 @@ namespace PORPGv2 {
 		}
 #pragma endregion
 
+	private: void generateCity() {
+
+		MapGenerator* city = game->getMap();
+		std::vector<Npc*> npcs = city->getNpcs();
+		std::string cityNameText = "Trafiles do miasta: " + city->getName();
+		const char* tmp1 = cityNameText.c_str();
+		System::String^ tmp = gcnew String(tmp1);
+		this->label4->Text = tmp;
+		this->label1->ResetText();
+		this->label2->ResetText();
+		this->label3->ResetText();
+		this->label5->ResetText();
+		this->comboBox2->Items->Clear();
+		this->comboBox3->Items->Clear();
+		this->comboBox4->Items->Clear();
+		for (int i = 0; i < npcs.size(); i++)
+		{
+			std::string name = npcs[i]->getName();
+			std::string type = npcs[i]->getType();
+			std::string tmp = std::to_string(i + 1) + ". " + type + " " + name;
+			const char *tmp2 = tmp.c_str();
+			System::String^ npc = gcnew String(tmp2);
+			this->comboBox2->Items->Add(npc);
+		}
+	}
+
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->startButton->Visible = true;
 		this->textBox1->Visible = true;
@@ -592,7 +618,7 @@ namespace PORPGv2 {
 	}
 
 	private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		
+
 		System::Object^ choose = comboBox1->SelectedItem;
 		if (!choose)
 		{
@@ -605,7 +631,7 @@ namespace PORPGv2 {
 		else {
 			System::String^ name = choose->ToString();
 			std::string sname = msclr::interop::marshal_as<std::string>(name);
-			
+
 			this->startGameButton->Visible = false;
 			this->comboBox1->Visible = false;
 			this->pictureBox1->Visible = true;
@@ -634,19 +660,28 @@ namespace PORPGv2 {
 		std::string playerName = msclr::interop::marshal_as<std::string>(pName);
 		Player* player = new Player();
 		player->setName(playerName);
-		game->goToCity(player);
+		game->goToCity(player);/*
 		MapGenerator* city = game->getMap();
 		std::vector<Npc*> npcs = city->getNpcs();
+		std::string cityNameText = "Trafiles do miasta: " + city->getName();
+		const char* tmp1 = cityNameText.c_str();
+		System::String^ tmp = gcnew String(tmp1);
+		this->label4->Text = tmp;
+		this->comboBox2->Items->Clear();
 		for (int i = 0; i < npcs.size(); i++)
 		{
 			std::string name = npcs[i]->getName();
 			std::string type = npcs[i]->getType();
-			std::string tmp = type + " " + name;
+			std::string tmp = std::to_string(i+1) + ". " + type + " " + name;
 			const char *tmp2 = tmp.c_str();
 			System::String^ npc = gcnew String(tmp2);
 			this->comboBox2->Items->Add(npc);
-		}
-		
+		}*/
+		this->label1->ResetText();
+		this->label2->ResetText();
+		this->label3->ResetText();
+		this->label4->ResetText();
+		generateCity();
 
 		this->textBox1->Visible = false;
 		this->startButton->Visible = false;
@@ -708,8 +743,9 @@ namespace PORPGv2 {
 		this->button14->Enabled = false;
 	}
 	private: System::Void button13_Click(System::Object^  sender, System::EventArgs^  e) {
-		
+
 		game->goToCity(game->getPlayer());
+		generateCity();
 		this->pictureBox1->Visible = true;
 		this->pictureBox2->Visible = false;
 		this->button1->Visible = true;
@@ -751,14 +787,30 @@ namespace PORPGv2 {
 		this->label1->Visible = false;
 		this->label2->Visible = false;
 		this->label3->Visible = false;
+		this->label4->Visible = false;
 		this->pictureBox1->Visible = false;
 
 		this->newGameButton->Visible = true;
 		this->loadButton->Visible = true;
 		this->exitButton->Visible = true;
 	}
-private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
-	
-}
-};
+	private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
+		System::Object^ choose = comboBox2->SelectedItem;
+		if (!choose)
+		{
+
+		}
+		else {
+			System::String^ name = choose->ToString();
+			std::string sname = msclr::interop::marshal_as<std::string>(name);
+			int npcId = sname[0] - 49;
+			MapGenerator* map = game->getMap();
+			Npc* npc = map->getNpcs()[npcId];
+			std::string text = "Imie: " + npc->getName() + "\nZawod: " + npc->getType() + "\nIlosc pieniedzy: " + std::to_string(npc->getMoney());
+			const char* tmp1 = text.c_str();
+			System::String^ tmp = gcnew String(tmp1);
+			this->label1->Text = tmp;
+		}
+	}
+	};
 }

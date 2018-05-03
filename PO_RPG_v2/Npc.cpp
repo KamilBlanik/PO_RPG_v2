@@ -41,6 +41,11 @@ void Npc::deleteSkill(int i) {
 void Npc::setMoney(int money) {
 	this->money = money;
 }
+
+int Npc::getMoney() {
+	return this->money;
+}
+
 std::string Npc::getName() {
 	return this->name;
 }

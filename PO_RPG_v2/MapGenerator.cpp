@@ -83,7 +83,7 @@ Items* MapGenerator::generateItem() {
 	int bonusMana = 0;
 	int bonusArmor = 0;
 	int itemLevel = 0;
-	srand(time(NULL));
+	//srand(time(NULL));
 	itemLevel = rand() % 11;
 	int i = rand() % 5;
 	int j = rand() % 5;
@@ -132,7 +132,7 @@ Skills* MapGenerator::generateSkill() {
 	int value;
 	int price;
 	int skillLevel;
-	srand(time(NULL));
+	//srand(time(NULL));
 	skillLevel = rand() % 11;
 	int i = rand() % 3;
 	int j = rand() % 3;
@@ -172,7 +172,6 @@ MapGenerator* MapGenerator::generateCity() {
 	map->setName(cityName[i]);
 	map->setDifficult(0);
 	map->setNpcs(spawnNpcs(j));
-
 	return map;
 }
 

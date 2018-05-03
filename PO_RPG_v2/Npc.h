@@ -24,6 +24,7 @@ public:
 	void addSkill(Skills* skill);
 	void deleteSkill(int i);
 	void setMoney(int money);
+	int getMoney();
 	std::string getName();
 	std::string getType();
 	std::vector<Items*> getItems();
