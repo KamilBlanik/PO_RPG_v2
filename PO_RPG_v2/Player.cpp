@@ -5,8 +5,6 @@ Player::Player() {
 	experience = 0;
 	skillPoints = 0;
 	money = 0;
-	inventory.empty();
-	backpack.empty();
 	
 }
 
@@ -176,6 +174,13 @@ void Player::deleteItemFromInv(int i) {
 
 }
 
+void Player::incraseMoney(int i) {
+	this->money += i;
+}
+void Player::subbMoney(int i) {
+	this->money -= i;
+}
+
 int Player::getExp() {
 	return this->experience;
 }
@@ -194,6 +199,27 @@ std::vector<Items*> Player::getInventory() {
 
 std::vector<Items*> Player::getBp() {
 	return this->backpack;
+}
+
+void Player::buyItem(int i,Npc* npc) {
+
+	if (npc->getItems()[i]->getPrice() > this->money) {
+
+	}
+	else {
+		
+		this->money -= npc->getItems()[i]->getPrice();
+		npc->incraseMoney(npc->getItems()[i]->getPrice());
+		addItemToBp(npc->getItems()[i]);
+		npc->deleteItem(i);
+		
+	}
+}
+void Player::sellItem(Items* item) {
+
+}
+void Player::learnSkill(Skills* skill) {
+
 }
 
 std::ostream& operator<<(std::ostream&  out, Player * player) {

@@ -31,6 +31,11 @@ public:
 	void inventoryManagement();
 	void backpackManagement();
 	void talkToNpc(Npc *npc);
+	void incraseMoney(int i);
+	void subbMoney(int i);
+	void buyItem(int i,Npc* npc);
+	void sellItem(Items* item);
+	void learnSkill(Skills* skill);
 	int getExp();
 	int getSkillPoints();
 	int getMoney();

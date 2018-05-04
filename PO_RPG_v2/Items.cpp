@@ -82,31 +82,31 @@ std::string Items::getName() {
 }
 
 std::string Items::getType() {
-	return type;
+	return this->type;
 }
 
 int Items::getPrice() {
-	return price;
+	return this->price;
 }
 
 int Items::getDmg() {
-	return bonusDmg;
+	return this->bonusDmg;
 }
 
 int Items::getHp() {
-	return bonusHp;
+	return this->bonusHp;
 }
 
 int Items::getMana() {
-	return bonusMana;
+	return this->bonusMana;
 }
 
 int Items::getArmor() {
-	return bonusArmor;
+	return this->bonusArmor;
 }
 
 int Items::getItemLvl() {
-	return itemLevel;
+	return this->itemLevel;
 }
 
 std::ostream& operator<<(std::ostream& out, Items * item) {

@@ -28,7 +28,7 @@ void Npc::addItem(Items* item) {
 	this->items.push_back(item);
 }
 void Npc::deleteItem(int i) {
-	delete this->items[i];
+	//delete this->items[i];
 	this->items.erase(items.begin() + i);
 }
 void Npc::addSkill(Skills* skill) {
@@ -40,6 +40,14 @@ void Npc::deleteSkill(int i) {
 }
 void Npc::setMoney(int money) {
 	this->money = money;
+}
+
+void Npc::incraseMoney(int i) {
+	this->money += i;
+}
+
+void Npc::subbMoney(int i) {
+	this->money -= i;
 }
 
 int Npc::getMoney() {

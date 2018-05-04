@@ -23,6 +23,8 @@ public:
 	void deleteItem(int i);
 	void addSkill(Skills* skill);
 	void deleteSkill(int i);
+	void incraseMoney(int i);
+	void subbMoney(int i);
 	void setMoney(int money);
 	int getMoney();
 	std::string getName();
