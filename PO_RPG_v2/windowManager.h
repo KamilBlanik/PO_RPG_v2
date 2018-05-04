@@ -89,6 +89,7 @@ namespace PORPGv2 {
 	protected:
 
 	private: int choosenNpc = 0;
+	private: System::Windows::Forms::Label^  label7;
 			 /// <summary>
 			 /// Wymagana zmienna projektanta.
 			 /// </summary>
@@ -137,6 +138,7 @@ namespace PORPGv2 {
 				 this->comboBox5 = (gcnew System::Windows::Forms::ComboBox());
 				 this->button16 = (gcnew System::Windows::Forms::Button());
 				 this->label6 = (gcnew System::Windows::Forms::Label());
+				 this->label7 = (gcnew System::Windows::Forms::Label());
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 				 this->SuspendLayout();
@@ -252,6 +254,7 @@ namespace PORPGv2 {
 				 this->button1->Text = L"Zapisz";
 				 this->button1->UseVisualStyleBackColor = true;
 				 this->button1->Visible = false;
+				 this->button1->Click += gcnew System::EventHandler(this, &windowManager::button1_Click_2);
 				 // 
 				 // button2
 				 // 
@@ -290,7 +293,7 @@ namespace PORPGv2 {
 				 this->button4->Name = L"button4";
 				 this->button4->Size = System::Drawing::Size(200, 75);
 				 this->button4->TabIndex = 12;
-				 this->button4->Text = L"Pokaz ekwipunek";
+				 this->button4->Text = L"Zarzadzaj postacia";
 				 this->button4->UseVisualStyleBackColor = true;
 				 this->button4->Visible = false;
 				 // 
@@ -570,6 +573,16 @@ namespace PORPGv2 {
 				 this->label6->Text = L"Statystyki zaklecia do nauczenia";
 				 this->label6->Visible = false;
 				 // 
+				 // label7
+				 // 
+				 this->label7->AutoSize = true;
+				 this->label7->Location = System::Drawing::Point(767, 189);
+				 this->label7->Name = L"label7";
+				 this->label7->Size = System::Drawing::Size(115, 17);
+				 this->label7->TabIndex = 36;
+				 this->label7->Text = L"Statystyki gracza";
+				 this->label7->Visible = false;
+				 // 
 				 // windowManager
 				 // 
 				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -577,6 +590,7 @@ namespace PORPGv2 {
 				 this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 				 this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 				 this->ClientSize = System::Drawing::Size(982, 753);
+				 this->Controls->Add(this->label7);
 				 this->Controls->Add(this->label5);
 				 this->Controls->Add(this->label4);
 				 this->Controls->Add(this->button14);
@@ -784,7 +798,7 @@ namespace PORPGv2 {
 		label->Text += tmp;
 	}
 
-	private: void showSpellInfo(System::Windows::Forms::Label^ label, Skills* skill) {
+	private: void showSkillInfo(System::Windows::Forms::Label^ label, Skills* skill) {
 		label->ResetText();
 		std::string info = "\n" + skill->getName() + "\nTyp: " + skill->getType() + "\nCena: " + std::to_string(skill->getPrice()) + "\nWartosc bonusu: " + std::to_string(skill->getValue()) + "\nWymagany poziom: " + std::to_string(skill->getSkillLevel());
 		const char* text = info.c_str();
@@ -839,6 +853,12 @@ namespace PORPGv2 {
 			System::String^ tmp = gcnew String(tmp1);
 			this->label1->Text = tmp;
 		}
+	}
+
+	private: void updatePlayerInfo() {
+		this->comboBox3->Items->Clear();
+		this->comboBox3->ResetText();
+		
 	}
 
 	private: Items * getSelectedItem(System::Windows::Forms::ComboBox^ comboBox) {
@@ -910,31 +930,12 @@ namespace PORPGv2 {
 			game->goToCity(file->loadGame(sname));
 			cityLayout();
 			generateCity();
-			/*
-			this->startGameButton->Visible = false;
-			this->comboBox1->Visible = false;
-			this->pictureBox1->Visible = true;
-			this->button1->Visible = true;
-			this->button2->Visible = true;
-			this->button3->Visible = true;
-			this->button4->Visible = true;
-			this->button5->Visible = true;
-			this->button6->Visible = true;
-			this->button7->Visible = true;
-			this->button8->Visible = true;
-			this->button9->Visible = true;
-			this->comboBox2->Visible = true;
-			this->comboBox3->Visible = true;
-			this->comboBox4->Visible = true;
-			this->label1->Visible = true;
-			this->label2->Visible = true;
-			this->label3->Visible = true;
-			this->label4->Visible = true;*/
+
 		}
 
 	}
 	private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
-		System::Object^ name = textBox1->GetType();
+		System::Object^ name = textBox1->Text;
 		System::String^ pName = name->ToString();
 		std::string playerName = msclr::interop::marshal_as<std::string>(pName);
 		Player* player = new Player();
@@ -943,80 +944,11 @@ namespace PORPGv2 {
 		cityLayout();
 		generateCity();
 
-		/*
-		MapGenerator* city = game->getMap();
-		std::vector<Npc*> npcs = city->getNpcs();
-		std::string cityNameText = "Trafiles do miasta: " + city->getName();
-		const char* tmp1 = cityNameText.c_str();
-		System::String^ tmp = gcnew String(tmp1);
-		this->label4->Text = tmp;
-		this->comboBox2->Items->Clear();
-		for (int i = 0; i < npcs.size(); i++)
-		{
-			std::string name = npcs[i]->getName();
-			std::string type = npcs[i]->getType();
-			std::string tmp = std::to_string(i+1) + ". " + type + " " + name;
-			const char *tmp2 = tmp.c_str();
-			System::String^ npc = gcnew String(tmp2);
-			this->comboBox2->Items->Add(npc);
-		}*/
-		/*
-		this->label1->ResetText();
-		this->label2->ResetText();
-		this->label3->ResetText();
-		this->label4->ResetText();
-		generateCity();
 
-		this->textBox1->Visible = false;
-		this->startButton->Visible = false;
-		this->pictureBox1->Visible = true;
-		this->button1->Visible = true;
-		this->button2->Visible = true;
-		this->button3->Visible = true;
-		this->button4->Visible = true;
-		this->button5->Visible = true;
-		this->button6->Visible = true;
-		this->button7->Visible = true;
-		this->button8->Visible = true;
-		this->button9->Visible = true;
-		this->comboBox2->Visible = true;
-		this->comboBox3->Visible = true;
-		this->comboBox4->Visible = true;
-		this->label1->Visible = true;
-		this->label2->Visible = true;
-		this->label3->Visible = true;
-		this->label4->Visible = true;*/
 	}
 	private: System::Void button3_Click_1(System::Object^  sender, System::EventArgs^  e) {
 		dungeonLayout();
-		/*this->button1->Visible = false;
-		this->button2->Visible = false;
-		this->button3->Visible = false;
-		this->button4->Visible = false;
-		this->button5->Visible = false;
-		this->button6->Visible = false;
-		this->button7->Visible = false;
-		this->button8->Visible = false;
-		this->button9->Visible = false;
-		this->comboBox2->Visible = false;
-		this->comboBox3->Visible = false;
-		this->comboBox4->Visible = false;
-		this->label1->Visible = false;
-		this->label2->Visible = false;
-		this->label3->Visible = false;
-		this->label4->Visible = false;
-		this->label5->Visible = true;
-		this->pictureBox1->Visible = false;
 
-		this->pictureBox2->Visible = true;
-		this->button10->Visible = true;
-		this->button11->Visible = true;
-		this->button12->Visible = true;
-		this->button13->Visible = true;
-		this->button14->Visible = true;
-		this->button10->Enabled = false;
-		this->button11->Enabled = false;
-		this->button12->Enabled = false;*/
 	}
 	private: System::Void button14_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->button10->Enabled = true;
@@ -1030,91 +962,15 @@ namespace PORPGv2 {
 		game->goToCity(game->getPlayer());
 		cityLayout();
 		generateCity();
-		/*this->pictureBox1->Visible = true;
-		this->pictureBox2->Visible = false;
-		this->button1->Visible = true;
-		this->button2->Visible = true;
-		this->button3->Visible = true;
-		this->button4->Visible = true;
-		this->button5->Visible = true;
-		this->button6->Visible = true;
-		this->button7->Visible = true;
-		this->button8->Visible = true;
-		this->button9->Visible = true;
-		this->button10->Visible = false;
-		this->button11->Visible = false;
-		this->button12->Visible = false;
-		this->button13->Visible = false;
-		this->button14->Visible = false;
-		this->comboBox2->Visible = true;
-		this->comboBox3->Visible = true;
-		this->comboBox4->Visible = true;
-		this->label1->Visible = true;
-		this->label2->Visible = true;
-		this->label3->Visible = true;
-		this->label4->Visible = true;
-		this->label5->Visible = false;*/
+
 	}
 	private: System::Void button2_Click_1(System::Object^  sender, System::EventArgs^  e) {
 		menuLayout();
 		game->~GameManager();
-		/*this->button1->Visible = false;
-		this->button2->Visible = false;
-		this->button3->Visible = false;
-		this->button4->Visible = false;
-		this->button5->Visible = false;
-		this->button6->Visible = false;
-		this->button7->Visible = false;
-		this->button8->Visible = false;
-		this->button9->Visible = false;
-		this->comboBox2->Visible = false;
-		this->comboBox3->Visible = false;
-		this->comboBox4->Visible = false;
-		this->label1->Visible = false;
-		this->label2->Visible = false;
-		this->label3->Visible = false;
-		this->label4->Visible = false;
-		this->pictureBox1->Visible = false;
 
-		this->newGameButton->Visible = true;
-		this->loadButton->Visible = true;
-		this->exitButton->Visible = true;*/
 	}
 	private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e) {
-		/*System::Object^ choose = comboBox2->SelectedItem;
-		if (!choose)
-		{
 
-		}
-		else {
-			System::String^ name = choose->ToString();
-			std::string sname = msclr::interop::marshal_as<std::string>(name);
-			int npcId = sname[0] - 49;
-			MapGenerator* map = game->getMap();
-			Npc* npc = map->getNpcs()[npcId];
-			std::string smth = "";
-			if (npc->getType() == "Nauczyciel") {
-				smth += "\nMoze nauczyc: ";
-				for (int i = 0; i < npc->getSkills().size(); i++)
-				{
-					smth += "\n";
-					smth += npc->getSkills()[i]->getName();
-				}
-			}
-			else {
-				smth += "\nMoze sprzedac: ";
-				for (int i = 0; i < npc->getItems().size(); i++)
-				{
-					smth += "\n";
-					smth = smth + npc->getItems()[i]->getName() + " " + npc->getItems()[i]->getType();
-				}
-
-			}
-			std::string text = "Imie: " + npc->getName() + "\nZawod: " + npc->getType() + "\nIlosc pieniedzy: " + std::to_string(npc->getMoney()) + smth;
-			const char* tmp1 = text.c_str();
-			System::String^ tmp = gcnew String(tmp1);
-			this->label1->Text = tmp;
-		}*/
 		updateTraderInfo();
 	}
 	private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -1126,7 +982,11 @@ namespace PORPGv2 {
 	}
 	private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) {
 		Skills* skill = getSelectedSkill(this->comboBox5);
-		showSpellInfo(this->label6, skill);
+		showSkillInfo(this->label6, skill);
+	}
+	private: System::Void button1_Click_2(System::Object^  sender, System::EventArgs^  e) {
+		FileManager save;
+		save.saveGame(game->getPlayer(), game->getPlayer()->getName() + ".txt");
 	}
 	};
 }
