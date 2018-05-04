@@ -47,6 +47,7 @@ std::vector<Npc*> MapGenerator::spawnNpcs(int count) {
 		switch (i)
 		{
 		case 0: {
+			items.clear();
 			int icount = rand() % 7 + 2;
 			for (int k = 0; k < icount; k++)
 			{
@@ -56,6 +57,7 @@ std::vector<Npc*> MapGenerator::spawnNpcs(int count) {
 		}
 				break;
 		case 1: {
+			skills.clear();
 			int icount = rand() % 3 + 1;
 			for (int k = 0; k < icount; k++)
 			{
