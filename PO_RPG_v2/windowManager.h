@@ -296,6 +296,7 @@ namespace PORPGv2 {
 				 this->button4->Text = L"Zarzadzaj postacia";
 				 this->button4->UseVisualStyleBackColor = true;
 				 this->button4->Visible = false;
+				 this->button4->Click += gcnew System::EventHandler(this, &windowManager::button4_Click);
 				 // 
 				 // button5
 				 // 
@@ -659,6 +660,7 @@ namespace PORPGv2 {
 		this->label3->Visible = true;
 		this->label4->Visible = true;
 		this->label6->Visible = true;
+		this->label7->Visible = true;
 
 		this->startButton->Visible = false;
 		this->startGameButton->Visible = false;
@@ -722,6 +724,7 @@ namespace PORPGv2 {
 		this->label4->Visible = false;
 		/*this->label5->Visible = false;*/
 		this->label6->Visible = false;
+		this->label7->Visible = false;
 		/*this->startButton->Visible = false;
 		this->startGameButton->Visible = false;*/
 		this->newGameButton->Visible = true;
@@ -756,6 +759,7 @@ namespace PORPGv2 {
 		this->label4->Visible = false;
 		this->label5->Visible = true;
 		this->label6->Visible = false;
+		this->label7->Visible = false;
 
 		this->button10->Visible = true;
 		this->button11->Visible = true;
@@ -856,9 +860,40 @@ namespace PORPGv2 {
 	}
 
 	private: void updatePlayerInfo() {
+		Player* player = game->getPlayer();
+		//player = game->getPlayer();
 		this->comboBox3->Items->Clear();
 		this->comboBox3->ResetText();
-		
+		this->label7->ResetText();
+		std::string t = "Statystyki gracza: " + player->getName()
+			+ "\nPieniadze: " + std::to_string(player->getMoney())
+			+ "\nPoziom: " + std::to_string(player->getLevel())
+			+ "\nExp:" + std::to_string(player->getExp())
+			+ "\nPunkty umiejetnosci: " + std::to_string(player->getSkillPoints())
+			+ "\nZycie: " + std::to_string(player->getHp())
+			+ "\nPancerz:	" + std::to_string(player->getArmor())
+			+ "\nMana: " + std::to_string(player->getMana())
+			+ "\nObrazenia: " + std::to_string(player->getDmg())
+			+ "\nExp:" + std::to_string(player->getExp())
+			+ "\nPunkty umiejetnosci: " + std::to_string(player->getSkillPoints())
+			+ "\nIlosc umjejetnosci: " + std::to_string(player->getSkills().size())
+			+ "\nIlosc przedmiotow: " + std::to_string(player->getBp().size());
+		std::string items = "\nUbierane przedmioty:";
+		for (int i = 0; i < player->getInventory().size(); i++)
+		{
+			items +="\n"+ player->getInventory()[i]->getName() + " " + player->getInventory()[i]->getType();
+		}
+		t += items;
+		const char* text = t.c_str();
+		System::String^ tmp = gcnew String(text);
+		this->label7->Text += tmp;
+		for (int i = 0; i < player->getBp().size(); i++)
+		{
+			std::string tmp = std::to_string(i + 1) + ". " + player->getBp()[i]->getName() + " " + player->getBp()[i]->getType();
+			const char *tt = tmp.c_str();
+			System::String^ s = gcnew String(tt);
+			this->comboBox3->Items->Add(s);
+		}
 	}
 
 	private: Items * getSelectedItem(System::Windows::Forms::ComboBox^ comboBox) {
@@ -943,6 +978,7 @@ namespace PORPGv2 {
 		game->goToCity(player);
 		cityLayout();
 		generateCity();
+		updatePlayerInfo();
 
 
 	}
@@ -988,5 +1024,8 @@ namespace PORPGv2 {
 		FileManager save;
 		save.saveGame(game->getPlayer(), game->getPlayer()->getName() + ".txt");
 	}
-	};
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+		updatePlayerInfo();
+	}
+};
 }
