@@ -90,6 +90,13 @@ namespace PORPGv2 {
 
 	private: int choosenNpc = 0;
 	private: System::Windows::Forms::Label^  label7;
+	private: System::Windows::Forms::Button^  button17;
+	private: System::Windows::Forms::Button^  button18;
+	private: System::Windows::Forms::Button^  button19;
+	private: System::Windows::Forms::Label^  label8;
+	private: System::Windows::Forms::Label^  label9;
+	private: System::Windows::Forms::Button^  button20;
+	private: System::Windows::Forms::ComboBox^  comboBox6;
 			 /// <summary>
 			 /// Wymagana zmienna projektanta.
 			 /// </summary>
@@ -139,6 +146,13 @@ namespace PORPGv2 {
 				 this->button16 = (gcnew System::Windows::Forms::Button());
 				 this->label6 = (gcnew System::Windows::Forms::Label());
 				 this->label7 = (gcnew System::Windows::Forms::Label());
+				 this->button17 = (gcnew System::Windows::Forms::Button());
+				 this->button18 = (gcnew System::Windows::Forms::Button());
+				 this->button19 = (gcnew System::Windows::Forms::Button());
+				 this->label8 = (gcnew System::Windows::Forms::Label());
+				 this->label9 = (gcnew System::Windows::Forms::Label());
+				 this->button20 = (gcnew System::Windows::Forms::Button());
+				 this->comboBox6 = (gcnew System::Windows::Forms::ComboBox());
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 				 this->SuspendLayout();
@@ -287,13 +301,13 @@ namespace PORPGv2 {
 				 // button4
 				 // 
 				 this->button4->Cursor = System::Windows::Forms::Cursors::Hand;
-				 this->button4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				 this->button4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 					 static_cast<System::Byte>(238)));
-				 this->button4->Location = System::Drawing::Point(770, 585);
+				 this->button4->Location = System::Drawing::Point(639, 189);
 				 this->button4->Name = L"button4";
-				 this->button4->Size = System::Drawing::Size(200, 75);
+				 this->button4->Size = System::Drawing::Size(125, 39);
 				 this->button4->TabIndex = 12;
-				 this->button4->Text = L"Zarzadzaj postacia";
+				 this->button4->Text = L"Wydaj PU na 25 HP";
 				 this->button4->UseVisualStyleBackColor = true;
 				 this->button4->Visible = false;
 				 this->button4->Click += gcnew System::EventHandler(this, &windowManager::button4_Click);
@@ -555,7 +569,7 @@ namespace PORPGv2 {
 				 this->button16->Cursor = System::Windows::Forms::Cursors::Hand;
 				 this->button16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 					 static_cast<System::Byte>(238)));
-				 this->button16->Location = System::Drawing::Point(234, 304);
+				 this->button16->Location = System::Drawing::Point(218, 255);
 				 this->button16->Name = L"button16";
 				 this->button16->Size = System::Drawing::Size(200, 75);
 				 this->button16->TabIndex = 34;
@@ -567,7 +581,7 @@ namespace PORPGv2 {
 				 // label6
 				 // 
 				 this->label6->AutoSize = true;
-				 this->label6->Location = System::Drawing::Point(451, 304);
+				 this->label6->Location = System::Drawing::Point(421, 256);
 				 this->label6->Name = L"label6";
 				 this->label6->Size = System::Drawing::Size(212, 17);
 				 this->label6->TabIndex = 35;
@@ -584,6 +598,90 @@ namespace PORPGv2 {
 				 this->label7->Text = L"Statystyki gracza";
 				 this->label7->Visible = false;
 				 // 
+				 // button17
+				 // 
+				 this->button17->Cursor = System::Windows::Forms::Cursors::Hand;
+				 this->button17->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+					 static_cast<System::Byte>(238)));
+				 this->button17->Location = System::Drawing::Point(639, 234);
+				 this->button17->Name = L"button17";
+				 this->button17->Size = System::Drawing::Size(125, 39);
+				 this->button17->TabIndex = 37;
+				 this->button17->Text = L"Wydaj PU na 10 many";
+				 this->button17->UseVisualStyleBackColor = true;
+				 this->button17->Visible = false;
+				 this->button17->Click += gcnew System::EventHandler(this, &windowManager::button17_Click);
+				 // 
+				 // button18
+				 // 
+				 this->button18->Cursor = System::Windows::Forms::Cursors::Hand;
+				 this->button18->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+					 static_cast<System::Byte>(238)));
+				 this->button18->Location = System::Drawing::Point(639, 282);
+				 this->button18->Name = L"button18";
+				 this->button18->Size = System::Drawing::Size(125, 39);
+				 this->button18->TabIndex = 38;
+				 this->button18->Text = L"Wydaj PU na 10 ataku";
+				 this->button18->UseVisualStyleBackColor = true;
+				 this->button18->Visible = false;
+				 this->button18->Click += gcnew System::EventHandler(this, &windowManager::button18_Click);
+				 // 
+				 // button19
+				 // 
+				 this->button19->Cursor = System::Windows::Forms::Cursors::Hand;
+				 this->button19->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+					 static_cast<System::Byte>(238)));
+				 this->button19->Location = System::Drawing::Point(218, 336);
+				 this->button19->Name = L"button19";
+				 this->button19->Size = System::Drawing::Size(200, 75);
+				 this->button19->TabIndex = 39;
+				 this->button19->Text = L"Sprawdz statystyki przedmiotu do ubrania";
+				 this->button19->UseVisualStyleBackColor = true;
+				 this->button19->Visible = false;
+				 // 
+				 // label8
+				 // 
+				 this->label8->AutoSize = true;
+				 this->label8->Location = System::Drawing::Point(215, 414);
+				 this->label8->Name = L"label8";
+				 this->label8->Size = System::Drawing::Size(270, 17);
+				 this->label8->TabIndex = 40;
+				 this->label8->Text = L"Sprawdz statystyki przedmiotu do ubrania";
+				 this->label8->Visible = false;
+				 // 
+				 // label9
+				 // 
+				 this->label9->AutoSize = true;
+				 this->label9->Location = System::Drawing::Point(421, 414);
+				 this->label9->Name = L"label9";
+				 this->label9->Size = System::Drawing::Size(125, 17);
+				 this->label9->TabIndex = 41;
+				 this->label9->Text = L"Aktualnie ubierany";
+				 this->label9->Visible = false;
+				 // 
+				 // button20
+				 // 
+				 this->button20->Cursor = System::Windows::Forms::Cursors::Hand;
+				 this->button20->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+					 static_cast<System::Byte>(238)));
+				 this->button20->Location = System::Drawing::Point(639, 331);
+				 this->button20->Name = L"button20";
+				 this->button20->Size = System::Drawing::Size(125, 39);
+				 this->button20->TabIndex = 42;
+				 this->button20->Text = L"Ubierz przedmiot";
+				 this->button20->UseVisualStyleBackColor = true;
+				 this->button20->Visible = false;
+				 // 
+				 // comboBox6
+				 // 
+				 this->comboBox6->FormattingEnabled = true;
+				 this->comboBox6->Location = System::Drawing::Point(624, 376);
+				 this->comboBox6->Name = L"comboBox6";
+				 this->comboBox6->Size = System::Drawing::Size(140, 24);
+				 this->comboBox6->TabIndex = 43;
+				 this->comboBox6->Text = L"Wybierz przedmiot";
+				 this->comboBox6->Visible = false;
+				 // 
 				 // windowManager
 				 // 
 				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -591,6 +689,13 @@ namespace PORPGv2 {
 				 this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 				 this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 				 this->ClientSize = System::Drawing::Size(982, 753);
+				 this->Controls->Add(this->comboBox6);
+				 this->Controls->Add(this->button20);
+				 this->Controls->Add(this->label9);
+				 this->Controls->Add(this->label8);
+				 this->Controls->Add(this->button19);
+				 this->Controls->Add(this->button18);
+				 this->Controls->Add(this->button17);
 				 this->Controls->Add(this->label7);
 				 this->Controls->Add(this->label5);
 				 this->Controls->Add(this->label4);
@@ -651,6 +756,9 @@ namespace PORPGv2 {
 		this->button9->Visible = true;
 		this->button16->Visible = true;
 		this->button15->Visible = true;
+		this->button17->Visible = true;
+		this->button18->Visible = true;
+		this->button19->Visible = true;
 		this->comboBox2->Visible = true;
 		this->comboBox3->Visible = true;
 		this->comboBox4->Visible = true;
@@ -661,6 +769,8 @@ namespace PORPGv2 {
 		this->label4->Visible = true;
 		this->label6->Visible = true;
 		this->label7->Visible = true;
+		this->label8->Visible = true;
+		this->label9->Visible = true;
 
 		this->startButton->Visible = false;
 		this->startGameButton->Visible = false;
@@ -713,6 +823,9 @@ namespace PORPGv2 {
 		this->button14->Visible = false;*/
 		this->button15->Visible = false;
 		this->button16->Visible = false;
+		this->button17->Visible = false;
+		this->button18->Visible = false;
+		this->button19->Visible = false;
 		/*this->comboBox1->Visible = false;*/
 		this->comboBox2->Visible = false;
 		this->comboBox3->Visible = false;
@@ -725,6 +838,8 @@ namespace PORPGv2 {
 		/*this->label5->Visible = false;*/
 		this->label6->Visible = false;
 		this->label7->Visible = false;
+		this->label8->Visible = false;
+		this->label9->Visible = false;
 		/*this->startButton->Visible = false;
 		this->startGameButton->Visible = false;*/
 		this->newGameButton->Visible = true;
@@ -749,6 +864,9 @@ namespace PORPGv2 {
 		this->button9->Visible = false;
 		this->button15->Visible = false;
 		this->button16->Visible = false;
+		this->button17->Visible = false;
+		this->button18->Visible = false;
+		this->button19->Visible = false;
 		this->comboBox2->Visible = false;
 		this->comboBox3->Visible = false;
 		this->comboBox4->Visible = false;
@@ -760,6 +878,8 @@ namespace PORPGv2 {
 		this->label5->Visible = true;
 		this->label6->Visible = false;
 		this->label7->Visible = false;
+		this->label8->Visible = false;
+		this->label9->Visible = false;
 
 		this->button10->Visible = true;
 		this->button11->Visible = true;
@@ -881,7 +1001,7 @@ namespace PORPGv2 {
 		std::string items = "\nUbierane przedmioty:";
 		for (int i = 0; i < player->getInventory().size(); i++)
 		{
-			items +="\n"+ player->getInventory()[i]->getName() + " " + player->getInventory()[i]->getType();
+			items += "\n" + player->getInventory()[i]->getName() + " " + player->getInventory()[i]->getType();
 		}
 		t += items;
 		const char* text = t.c_str();
@@ -1025,7 +1145,38 @@ namespace PORPGv2 {
 		save.saveGame(game->getPlayer(), game->getPlayer()->getName() + ".txt");
 	}
 	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-		updatePlayerInfo();
+		if (game->getPlayer()->getSkillPoints() == 0)
+		{
+			
+		}
+		else {
+			game->getPlayer()->increaseHp(25);
+			game->getPlayer()->setSkillPoints(game->getPlayer()->getSkillPoints() - 1);
+			updatePlayerInfo();
+		}
+
 	}
-};
+	private: System::Void button17_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (game->getPlayer()->getSkillPoints() == 0)
+		{
+			
+		}
+		else {
+			game->getPlayer()->increaseMana(10);
+			game->getPlayer()->setSkillPoints(game->getPlayer()->getSkillPoints() - 1);
+			updatePlayerInfo();
+		}
+	}
+	private: System::Void button18_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (game->getPlayer()->getSkillPoints() == 0)
+		{
+			
+		}
+		else {
+			game->getPlayer()->setDmg(game->getPlayer()->getDmg() + 10);
+			game->getPlayer()->setSkillPoints(game->getPlayer()->getSkillPoints() - 1);
+			updatePlayerInfo();
+		}
+	}
+	};
 }
