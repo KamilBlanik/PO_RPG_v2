@@ -43,10 +43,11 @@ int Character::attack() {
 void Character::defend() {
 	incrasedArmor = true;
 	increaseArmor(bonusArmor);
+	incrasedArmorVal = bonusArmor;
 }
 
 void Character::getHit(int damage) {
-	health = health - int(damage-(damage*(armor/100)));
+	health = health - int(damage-(damage*((armor+bonusArmor)/200)));
 	
 }
 
@@ -68,6 +69,7 @@ int Character::useSkill(Skills* skill) {
 	if (skill->getType() == "Defensywny") {
 		incrasedArmor = true;
 		increaseArmor(skill->getValue());
+		incrasedArmorVal = skill->getValue();
 		return 0;
 	}
 	if (skill->getType() == "Ofensywny") {

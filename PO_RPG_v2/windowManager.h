@@ -870,6 +870,11 @@ namespace PORPGv2 {
 		this->button7->Visible = false;
 		this->button8->Visible = false;
 		this->button9->Visible = false;
+		this->button10->Visible = false;
+		this->button11->Visible = false;
+		this->button12->Visible = false;
+		this->button13->Visible = false;
+		this->button14->Visible = false;
 		this->button15->Visible = false;
 		this->button16->Visible = false;
 		this->button17->Visible = false;
@@ -881,6 +886,7 @@ namespace PORPGv2 {
 		this->comboBox4->Visible = false;
 		this->comboBox5->Visible = false;
 		this->comboBox6->Visible = false;
+		this->comboBox7->Visible = false;
 		this->label1->Visible = false;
 		this->label2->Visible = false;
 		this->label3->Visible = false;
@@ -1016,7 +1022,7 @@ namespace PORPGv2 {
 
 	}
 	private: void showEnemyInfo(Enemy* enemy) {
-		if (game->getMap()->getEnemies().size()>0)
+		if (game->getMap()->getEnemies().size() > 0)
 		{
 			std::string info = "Natrafiles na przeciwnika!\nNazwa: "
 				+ enemy->getName()
@@ -1190,6 +1196,25 @@ namespace PORPGv2 {
 		choosenItem = i;
 		return game->getPlayer()->getSkills()[i];
 	}
+
+	private: void enemyTour() {
+		if (game->getMap()->getEnemies()[0]->incrasedArmor)
+		{
+			game->getMap()->getEnemies()[0]->setArmor(game->getMap()->getEnemies()[0]->getArmor() - game->getMap()->getEnemies()[0]->incrasedArmorVal);
+			game->getMap()->getEnemies()[0]->incrasedArmor = false;
+		}
+		std::string log;
+		int val = game->getMap()->getEnemies()[0]->attack();
+		if (val == 0) {
+			log = "Przeciwnik cos knuje, nie zaatakowal cie.";
+		}
+		else {
+			log = "Pzeciwnik uderza za: " + std::to_string(val);
+			game->getPlayer()->getHit(val);
+		}
+
+
+	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->startButton->Visible = true;
 		this->textBox1->Visible = true;
@@ -1242,6 +1267,14 @@ namespace PORPGv2 {
 
 		}
 
+	}
+	private: void checkAlive() {
+		if (!game->getPlayer()->checkAlive()) {
+			menuLayout();
+			this->label4->Visible = true;
+			this->label4->Text = "PRZEGRALES!";
+		
+		}
 	}
 	private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
 		System::Object^ name = textBox1->Text;
@@ -1400,23 +1433,41 @@ namespace PORPGv2 {
 		}
 	}
 	private: System::Void button10_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (game->getPlayer()->incrasedArmor) {
+			game->getPlayer()->setArmor(game->getPlayer()->getArmor() - game->getPlayer()->incrasedArmorVal);
+			game->getPlayer()->incrasedArmor = false;
+		}
 		std::string log = "Atakujesz za: " + std::to_string(game->getPlayer()->attack());
 		game->getMap()->getEnemies()[0]->getHit(game->getPlayer()->attack());
 		updateBattleLog(log);
-		updatePlayerInfo();
+
 		if (game->getMap()->getEnemies()[0]->getHp() <= 0)
 		{
 			nextEnemy();
 		}
-		showEnemyInfo(game->getMap()->getEnemies()[0]);
+		else {
+			enemyTour();
+			showEnemyInfo(game->getMap()->getEnemies()[0]);
+			updatePlayerInfo();
+			checkAlive();
+		}
+
+
 
 
 	}
 	private: System::Void button11_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (game->getPlayer()->incrasedArmor) {
+			game->getPlayer()->setArmor(game->getPlayer()->getArmor() - game->getPlayer()->incrasedArmorVal);
+			game->getPlayer()->incrasedArmor = false;
+		}
 		std::string log = "Bronisz (zwiekszony pancerz) ";// +std::to_string(game->getPlayer()->defend());
 		updateBattleLog(log);
-		updatePlayerInfo();
+
 		showEnemyInfo(game->getMap()->getEnemies()[0]);
+		enemyTour();
+		updatePlayerInfo();
+		checkAlive();
 	}
 	private: System::Void button12_Click(System::Object^  sender, System::EventArgs^  e) {
 		Skills* skill = getSelectedSkillPlayer(this->comboBox7);
@@ -1426,15 +1477,26 @@ namespace PORPGv2 {
 		}
 		else
 		{
+			if (game->getPlayer()->incrasedArmor) {
+				game->getPlayer()->setArmor(game->getPlayer()->getArmor() - game->getPlayer()->incrasedArmorVal);
+				game->getPlayer()->incrasedArmor = false;
+			}
 			std::string log = "Rzucasz zaklecie: " + skill->getName();
 			game->getMap()->getEnemies()[0]->getHit(game->getPlayer()->useSkill(skill));
 			updateBattleLog(log);
-			updatePlayerInfo();
+
 			if (game->getMap()->getEnemies()[0]->getHp() <= 0)
 			{
 				nextEnemy();
 			}
-			showEnemyInfo(game->getMap()->getEnemies()[0]);
+			else {
+				showEnemyInfo(game->getMap()->getEnemies()[0]);
+				enemyTour();
+				updatePlayerInfo();
+				checkAlive();
+			}
+
+
 		}
 
 	}

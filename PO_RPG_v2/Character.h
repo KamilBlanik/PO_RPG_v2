@@ -43,7 +43,8 @@ public:
 	int getBonusArmor();
 	int getBonusDmg();
 	std::vector<Skills*> getSkills();
-
+	bool incrasedArmor;
+	int incrasedArmorVal;
 protected:
 	std::string name;
 	bool isAlive;
@@ -56,8 +57,8 @@ protected:
 	int bonusMana;
 	int baseDmg;
 	int bonusDmg;
-	bool incrasedArmor;
-	int incrasedArmorVal;
+	
+	
 	std::vector<Skills*> skill;
 };
 

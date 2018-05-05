@@ -26,18 +26,23 @@ void Enemy::setLoot(std::vector<Items*> loot) {
 
 int Enemy::attack() {
 	srand(time(NULL));
-	int i = rand() % 3;
+	int i = 0;
+	if (skill.size() != 0) {i = rand() % 3; }
+	else
+	{
+		i = rand() % 2;
+	}
 	switch (i)
 	{
 	case 0: {
 		return baseDmg + bonusDmg;
 	}break;
 	case 1: {
-		incrasedArmor = true;
-		increaseArmor(bonusArmor);
+		defend();
 		return 0;
 	}break;
 	case 2: {
+		
 		int j = rand() % skill.size();
 		return useSkill(skill[j]);
 
