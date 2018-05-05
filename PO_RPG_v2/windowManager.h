@@ -342,6 +342,7 @@ namespace PORPGv2 {
 				 this->button6->Text = L"Sprzedaj";
 				 this->button6->UseVisualStyleBackColor = true;
 				 this->button6->Visible = false;
+				 this->button6->Click += gcnew System::EventHandler(this, &windowManager::button6_Click);
 				 // 
 				 // button7
 				 // 
@@ -558,6 +559,7 @@ namespace PORPGv2 {
 				 this->button15->Text = L"Naucz sie";
 				 this->button15->UseVisualStyleBackColor = true;
 				 this->button15->Visible = false;
+				 this->button15->Click += gcnew System::EventHandler(this, &windowManager::button15_Click);
 				 // 
 				 // comboBox5
 				 // 
@@ -643,6 +645,7 @@ namespace PORPGv2 {
 				 this->button19->Text = L"Sprawdz statystyki przedmiotu do ubrania";
 				 this->button19->UseVisualStyleBackColor = true;
 				 this->button19->Visible = false;
+				 this->button19->Click += gcnew System::EventHandler(this, &windowManager::button19_Click);
 				 // 
 				 // label8
 				 // 
@@ -676,6 +679,7 @@ namespace PORPGv2 {
 				 this->button20->Text = L"Ubierz przedmiot";
 				 this->button20->UseVisualStyleBackColor = true;
 				 this->button20->Visible = false;
+				 this->button20->Click += gcnew System::EventHandler(this, &windowManager::button20_Click);
 				 // 
 				 // comboBox6
 				 // 
@@ -996,29 +1000,32 @@ namespace PORPGv2 {
 
 	private: void updatePlayerInfo() {
 		Player* player = game->getPlayer();
+		player->getBonuses();
 		this->comboBox3->Items->Clear();
 		this->comboBox3->ResetText();
+		this->comboBox6->Items->Clear();
+		this->comboBox6->ResetText();
 		this->label7->ResetText();
 
-		std::vector<Items*> itemss = player->getBp();
+		/*std::vector<Items*> itemss = player->getBp();
 		Items* item = itemss[0];
-		int p = item->getPrice();
+		int p = item->getPrice();*/
 
 		std::string t = "Statystyki gracza: " + player->getName()
 			+ "\nPieniadze: " + std::to_string(player->getMoney())
 			+ "\nPoziom: " + std::to_string(player->getLevel())
 			+ "\nExp:" + std::to_string(player->getExp())
 			+ "\nPunkty umiejetnosci: " + std::to_string(player->getSkillPoints())
-			+ "\nZycie: " + std::to_string(player->getHp())
-			+ "\nPancerz:	" + std::to_string(player->getArmor())
-			+ "\nMana: " + std::to_string(player->getMana())
-			+ "\nObrazenia: " + std::to_string(player->getDmg())
+			+ "\nZycie: " + std::to_string(player->getHp() + player->getBonusHp())
+			+ "\nPancerz:	" + std::to_string(player->getArmor() + player->getBonusArmor())
+			+ "\nMana: " + std::to_string(player->getMana() + player->getBonusMana())
+			+ "\nObrazenia: " + std::to_string(player->getDmg() + player->getBonusDmg())
 			+ "\nExp:" + std::to_string(player->getExp())
-			+ "\nPunkty umiejetnosci: " + std::to_string(p)
+			//+ "\nPunkty umiejetnosci: " + std::to_string(p)
 			+ "\nIlosc umjejetnosci: " + std::to_string(player->getSkills().size())
 			+ "\nIlosc przedmiotow: " + std::to_string(player->getBp().size());
 		std::string items = "\nUbierane przedmioty:";
-		for (int i = 1; i < player->getInventory().size(); i++)
+		for (int i = 0; i < player->getInventory().size(); i++)
 		{
 			items += "\n" + player->getInventory()[i]->getName() + " " + player->getInventory()[i]->getType();
 		}
@@ -1034,10 +1041,11 @@ namespace PORPGv2 {
 			const char *ttemp = tmpp.c_str();
 			System::String^ st = gcnew String(ttemp);
 			this->comboBox3->Items->Add(st);
+			this->comboBox6->Items->Add(st);
 		}
 	}
 
-	private: Items * getSelectedItem(System::Windows::Forms::ComboBox^ comboBox) {
+	private: Items * getSelectedItemNpc(System::Windows::Forms::ComboBox^ comboBox) {
 		Items *item = new Items();
 		System::Object^ choose = comboBox->SelectedItem;
 		if (!choose) return item;
@@ -1046,6 +1054,17 @@ namespace PORPGv2 {
 		int i = strname[0] - 49;
 		choosenItem = i;
 		return game->getMap()->getNpcs()[choosenNpc]->getItems()[i];
+	}
+
+	private: Items * getSelectedItemPlayer(System::Windows::Forms::ComboBox^ comboBox) {
+		Items *item = new Items();
+		System::Object^ choose = comboBox->SelectedItem;
+		if (!choose) return item;
+		System::String^ name = choose->ToString();
+		std::string strname = msclr::interop::marshal_as<std::string>(name);
+		int i = strname[0] - 49;
+		choosenItem = i;
+		return game->getPlayer()->getBp()[i];
 	}
 
 	private: Skills * getSelectedSkill(System::Windows::Forms::ComboBox^ comboBox) {
@@ -1154,12 +1173,15 @@ namespace PORPGv2 {
 		updateTraderInfo();
 	}
 	private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
-		Items* item = getSelectedItem(this->comboBox4);
+		Items* item = getSelectedItemNpc(this->comboBox4);
 		showItemInfo(this->label2, item);
 	}
 
 	private: System::Void button9_Click(System::Object^  sender, System::EventArgs^  e) {
+		Items* item = getSelectedItemPlayer(this->comboBox3);
+		showItemInfo(this->label3, item);
 	}
+
 	private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) {
 		Skills* skill = getSelectedSkill(this->comboBox5);
 		showSkillInfo(this->label6, skill);
@@ -1203,7 +1225,7 @@ namespace PORPGv2 {
 		}
 	}
 	private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
-		Items* item = getSelectedItem(this->comboBox4);
+		Items* item = getSelectedItemNpc(this->comboBox4);
 		if (item->getName() != "Nieznany") {
 			game->getPlayer()->buyItem(choosenItem, game->getMap()->getNpcs()[choosenNpc]);
 			updatePlayerInfo();
@@ -1211,5 +1233,37 @@ namespace PORPGv2 {
 		}
 
 	}
-	};
+	private: System::Void button19_Click(System::Object^  sender, System::EventArgs^  e) {
+		Items* bpItem = getSelectedItemPlayer(this->comboBox6);
+		Items* invItem = new Items();
+		for (int i = 0; i < game->getPlayer()->getInventory().size(); i++)
+		{
+			if (game->getPlayer()->getInventory()[i]->getType() == bpItem->getType()) {
+				invItem = game->getPlayer()->getInventory()[i];
+			}
+		}
+		showItemInfo(this->label8, bpItem);
+		showItemInfo(this->label9, invItem);
+
+	}
+	private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+		Items* item = getSelectedItemPlayer(this->comboBox3);
+		game->getPlayer()->sellItem(choosenItem,game->getMap()->getNpcs()[choosenNpc]);
+		updatePlayerInfo();
+		updateTraderInfo();
+	}
+	private: System::Void button15_Click(System::Object^  sender, System::EventArgs^  e) {
+		Skills* skill = getSelectedSkill(this->comboBox5);
+		game->getPlayer()->learnSkill(skill,game->getMap()->getNpcs()[choosenNpc]);
+		updatePlayerInfo();
+		updateTraderInfo();
+	}
+	private: System::Void button20_Click(System::Object^  sender, System::EventArgs^  e) {
+		Items* item = getSelectedItemPlayer(this->comboBox6);
+		if (item->getName() != "Nieznany") {
+			game->getPlayer()->addItemToInv(item,choosenItem);
+			updatePlayerInfo();
+		}
+	}
+};
 }

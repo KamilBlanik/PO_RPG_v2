@@ -9,7 +9,9 @@ Character::Character() {
 	health = 100;
 	mana = 0;
 	armor = 0;
+	bonusHp = 0;
 	baseDmg = 10;
+	bonusMana = 0;
 	bonusDmg = 0;
 	bonusArmor = 0;
 	skill.empty();
@@ -23,6 +25,8 @@ Character::~Character() {
 	health = 0;
 	mana = 0;
 	armor = 0;
+	bonusHp = 0;
+	bonusMana = 0;
 	baseDmg = 0;
 	bonusDmg = 0;
 	bonusArmor = 0;
@@ -88,6 +92,10 @@ void Character::setDmg(int val) {
 	this->baseDmg = val;
 }
 
+void Character::setBonusHp(int bonus) {
+	this->bonusHp = bonus;
+}
+
 void Character::setBonusArmor(int val) {
 	this->bonusArmor = val;
 }
@@ -143,6 +151,19 @@ int Character::getLevel() {
 
 int Character::getHp() {
 	return health;
+}
+
+int Character::getBonusHp() {
+	return this->bonusHp;
+}
+int Character::getBonusMana() {
+	return this->bonusMana;
+}
+int Character::getBonusArmor() {
+	return this->bonusArmor;
+}
+int Character::getBonusDmg() {
+	return this->bonusDmg;
 }
 
 std::vector<Skills*> Character::getSkills() {

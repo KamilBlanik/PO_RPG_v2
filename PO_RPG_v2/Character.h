@@ -25,6 +25,7 @@ public:
 	void setDmg(int dmg);
 	void setBonusArmor(int bonus);
 	void setBonusDmg(int bonus);
+	void setBonusHp(int bonus);
 	void increaseLevel(int value);
 	void increaseHp(int value);
 	void increaseMana(int value);
@@ -37,6 +38,10 @@ public:
 	int getMana();
 	int getArmor();
 	int getDmg();
+	int getBonusHp();
+	int getBonusMana();
+	int getBonusArmor();
+	int getBonusDmg();
 	std::vector<Skills*> getSkills();
 
 protected:
@@ -46,7 +51,9 @@ protected:
 	int health;
 	int mana;
 	int armor;
+	int bonusHp;
 	int bonusArmor;
+	int bonusMana;
 	int baseDmg;
 	int bonusDmg;
 	std::vector<Skills*> skill;
