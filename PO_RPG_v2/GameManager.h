@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "MapGenerator.h"
-
+#include "CombatManager.h"
 
 class GameManager {
 private:
@@ -14,6 +14,7 @@ private:
 public:
 	GameManager();
 	~GameManager();
+	void killEnemy();
 	void goToDangeon(Player* player);
 	void goToCity(Player* player);
 	MapGenerator* getMap();

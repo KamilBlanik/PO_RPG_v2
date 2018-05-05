@@ -2,7 +2,11 @@
 #include "CombatManager.h"
 
 
-void CombatManager::combat(Player player, Enemy enemy) {
+void CombatManager::combat(Player* player, MapGenerator* map){
+	isCombat = true;
+	while (player->checkAlive() || map->getEnemies()[0]->checkAlive())
+	{
 
+	}
 }
 

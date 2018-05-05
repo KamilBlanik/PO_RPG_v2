@@ -3,11 +3,13 @@
 
 #include "stdafx.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "MapGenerator.h"
 
 class CombatManager {
+private:
+	bool isCombat;
 public:
-	void combat(Player player, Enemy enemy);
+	void combat(Player* player, MapGenerator* map);
 };
 
 #endif

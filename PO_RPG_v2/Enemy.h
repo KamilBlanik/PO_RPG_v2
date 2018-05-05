@@ -14,10 +14,11 @@ private:
 
 public:
 	Enemy();
-	~Enemy();	
+	~Enemy();
 	Items* dropItem();
 	std::vector<Items*> getLoot();
 	void setLoot(std::vector<Items*> loot);
+	int attack();
 };
 
 #endif

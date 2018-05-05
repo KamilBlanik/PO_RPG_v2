@@ -214,6 +214,11 @@ void MapGenerator::setNpcs(std::vector<Npc*> vec) {
 	this->npcs = vec;
 }
 
+void MapGenerator::killEnemy() {
+	//delete this->enemies[0];
+	this->enemies.erase(enemies.begin());
+}
+
 std::vector<Enemy*> MapGenerator::getEnemies() {
 	return this->enemies;
 }

@@ -24,6 +24,7 @@ public:
 	void setDifficult(int lvl);
 	void setEnemies(std::vector<Enemy*> vec);
 	void setNpcs(std::vector<Npc*> vec);
+	void killEnemy();
 	std::vector<Enemy*> getEnemies();
 	std::vector<Npc*> getNpcs();
 	std::string getName();

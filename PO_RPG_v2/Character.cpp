@@ -15,7 +15,8 @@ Character::Character() {
 	bonusDmg = 0;
 	bonusArmor = 0;
 	skill.empty();
-
+	incrasedArmor = false;
+	incrasedArmorVal = 0;
 }
 
 Character::~Character() {
@@ -30,6 +31,8 @@ Character::~Character() {
 	baseDmg = 0;
 	bonusDmg = 0;
 	bonusArmor = 0;
+	incrasedArmor = false;
+	incrasedArmorVal = 0;
 	skill.clear();
 }
 
@@ -37,8 +40,9 @@ int Character::attack() {
 	return baseDmg + bonusDmg;
 }
 
-int Character::defend() {
-	return armor = armor + bonusArmor;
+void Character::defend() {
+	incrasedArmor = true;
+	increaseArmor(bonusArmor);
 }
 
 void Character::getHit(int damage) {
@@ -56,15 +60,19 @@ bool Character::checkAlive() {
 	}
 }
 
-void Character::useSkill(Skills* skill) {
-	if (skill->getType() == "healing") {
+int Character::useSkill(Skills* skill) {
+	if (skill->getType() == "Leczacy") {
 		increaseHp(skill->getValue());
+		return 0;
 	}
-	if (skill->getType() == "defensive") {
+	if (skill->getType() == "Defensywny") {
+		incrasedArmor = true;
 		increaseArmor(skill->getValue());
+		return 0;
 	}
-	if (skill->getType() == "offensive") {
-		//todo
+	if (skill->getType() == "Ofensywny") {
+		return skill->getValue();
+		
 	}
 }
 

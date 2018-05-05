@@ -12,11 +12,11 @@ class Character {
 public:
 	Character();
 	virtual ~Character();
-	int attack();
-	int defend();
+	virtual int attack();
+	void defend();
 	void getHit(int damage);
 	bool checkAlive();
-	void useSkill(Skills *skill);
+	int useSkill(Skills *skill);
 	void setName(std::string name);
 	void setLevel(int lvl);
 	void setHp(int hp);
@@ -56,6 +56,8 @@ protected:
 	int bonusMana;
 	int baseDmg;
 	int bonusDmg;
+	bool incrasedArmor;
+	int incrasedArmorVal;
 	std::vector<Skills*> skill;
 };
 

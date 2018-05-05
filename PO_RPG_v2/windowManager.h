@@ -99,6 +99,8 @@ namespace PORPGv2 {
 	private: System::Windows::Forms::Button^  button20;
 	private: System::Windows::Forms::ComboBox^  comboBox6;
 	private: System::Windows::Forms::ListBox^  listBox1;
+	private: System::Windows::Forms::ComboBox^  comboBox7;
+	private: System::Windows::Forms::Label^  label10;
 
 			 /// <summary>
 			 /// Wymagana zmienna projektanta.
@@ -157,6 +159,8 @@ namespace PORPGv2 {
 				 this->button20 = (gcnew System::Windows::Forms::Button());
 				 this->comboBox6 = (gcnew System::Windows::Forms::ComboBox());
 				 this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+				 this->comboBox7 = (gcnew System::Windows::Forms::ComboBox());
+				 this->label10 = (gcnew System::Windows::Forms::Label());
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 				 this->SuspendLayout();
@@ -458,6 +462,7 @@ namespace PORPGv2 {
 				 this->button10->Text = L"Atak";
 				 this->button10->UseVisualStyleBackColor = true;
 				 this->button10->Visible = false;
+				 this->button10->Click += gcnew System::EventHandler(this, &windowManager::button10_Click);
 				 // 
 				 // button11
 				 // 
@@ -471,6 +476,7 @@ namespace PORPGv2 {
 				 this->button11->Text = L"Obrona";
 				 this->button11->UseVisualStyleBackColor = true;
 				 this->button11->Visible = false;
+				 this->button11->Click += gcnew System::EventHandler(this, &windowManager::button11_Click);
 				 // 
 				 // button12
 				 // 
@@ -484,6 +490,7 @@ namespace PORPGv2 {
 				 this->button12->Text = L"Rzuc zaklecie";
 				 this->button12->UseVisualStyleBackColor = true;
 				 this->button12->Visible = false;
+				 this->button12->Click += gcnew System::EventHandler(this, &windowManager::button12_Click);
 				 // 
 				 // button13
 				 // 
@@ -701,6 +708,26 @@ namespace PORPGv2 {
 				 this->listBox1->TabIndex = 44;
 				 this->listBox1->Visible = false;
 				 // 
+				 // comboBox7
+				 // 
+				 this->comboBox7->FormattingEnabled = true;
+				 this->comboBox7->Location = System::Drawing::Point(504, 608);
+				 this->comboBox7->Name = L"comboBox7";
+				 this->comboBox7->Size = System::Drawing::Size(156, 24);
+				 this->comboBox7->TabIndex = 45;
+				 this->comboBox7->Text = L"Wybierz przedmiot";
+				 this->comboBox7->Visible = false;
+				 this->comboBox7->SelectedIndexChanged += gcnew System::EventHandler(this, &windowManager::comboBox7_SelectedIndexChanged);
+				 // 
+				 // label10
+				 // 
+				 this->label10->AutoSize = true;
+				 this->label10->Location = System::Drawing::Point(613, 517);
+				 this->label10->Name = L"label10";
+				 this->label10->Size = System::Drawing::Size(125, 17);
+				 this->label10->TabIndex = 46;
+				 this->label10->Text = L"Aktualnie ubierany";
+				 // 
 				 // windowManager
 				 // 
 				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -708,6 +735,8 @@ namespace PORPGv2 {
 				 this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 				 this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 				 this->ClientSize = System::Drawing::Size(982, 753);
+				 this->Controls->Add(this->label10);
+				 this->Controls->Add(this->comboBox7);
 				 this->Controls->Add(this->comboBox6);
 				 this->Controls->Add(this->button20);
 				 this->Controls->Add(this->label9);
@@ -785,6 +814,7 @@ namespace PORPGv2 {
 		this->comboBox4->Visible = true;
 		this->comboBox5->Visible = true;
 		this->comboBox6->Visible = true;
+		this->comboBox7->Visible = false;
 		this->label1->Visible = true;
 		this->label2->Visible = true;
 		this->label3->Visible = true;
@@ -890,6 +920,7 @@ namespace PORPGv2 {
 		this->comboBox4->Visible = false;
 		this->comboBox5->Visible = false;
 		this->comboBox6->Visible = false;
+		this->comboBox7->Visible = true;
 		this->label1->Visible = false;
 		this->label2->Visible = false;
 		this->label3->Visible = false;
@@ -911,6 +942,11 @@ namespace PORPGv2 {
 		this->listBox1->Visible = true;
 		this->pictureBox1->Visible = false;
 		this->pictureBox2->Visible = true;
+
+		this->listBox1->Items->Clear();
+
+		this->comboBox7->Items->Clear();
+		this->comboBox7->ResetText();
 	}
 
 	private: void generateCity() {
@@ -936,24 +972,61 @@ namespace PORPGv2 {
 	private: void generateDungeon() {
 		MapGenerator* dungeon = game->getMap();
 		std::vector<Enemy*> enemies = dungeon->getEnemies();
+		showDungeonInfo();
+		showEnemyInfo(dungeon->getEnemies()[0]);
+
+	}
+	private: void showDungeonInfo() {
+		MapGenerator* dungeon = game->getMap();
 		std::string dungNameText = "Trafiles do : " + dungeon->getName()
 			+ "\nIlosc przeciwnikow: " + std::to_string(dungeon->getEnemies().size());
 		const char* tmp1 = dungNameText.c_str();
 		System::String^ tmp = gcnew String(tmp1);
 		this->label4->Text = tmp;
-		showEnemyInfo(dungeon->getEnemies()[0]);
+	}
+	private: void nextEnemy() {
+		this->listBox1->Items->Clear();
+		game->getPlayer()->addItemToBp(game->getMap()->getEnemies()[0]->dropItem());
+		std::string log = "Zabiles przeciwnika!";
+		updateBattleLog(log);
+		log = "Znalazles przy nim: "
+			+ game->getMap()->getEnemies()[0]->dropItem()->getName() + " "
+			+ game->getMap()->getEnemies()[0]->dropItem()->getType();
+		updateBattleLog(log);
+		showDungeonInfo();
+		this->button10->Enabled = false;
+		this->button11->Enabled = false;
+		this->button12->Enabled = false;
+		this->button13->Enabled = true;
+		this->button14->Enabled = true;
+
+		game->getMap()->killEnemy();
+		if (game->getMap()->getEnemies().size() == 0) {
+			game->goToDangeon(game->getPlayer());
+			this->listBox1->Items->Clear();
+			log = "Po pokonaniu wszystki przeciwnikow trafiles do nasetpnego lochu";
+			showDungeonInfo();
+			updateBattleLog(log);
+		}
+		else {
+			showEnemyInfo(game->getMap()->getEnemies()[0]);
+		}
+
+
 
 	}
-
 	private: void showEnemyInfo(Enemy* enemy) {
-		std::string info = "Natrafiles na przeciwnika!\nNazwa: "
-			+ enemy->getName()
-			+ "\nPoziom: " + std::to_string(enemy->getLevel())
-			+ "\nZycie: " + std::to_string(enemy->getHp())
-			+ "\nMana: " + std::to_string(enemy->getMana());
-		const char * inf = info.c_str();
-		System::String^ text = gcnew String(inf);
-		this->label5->Text = text;
+		if (game->getMap()->getEnemies().size()>0)
+		{
+			std::string info = "Natrafiles na przeciwnika!\nNazwa: "
+				+ enemy->getName()
+				+ "\nPoziom: " + std::to_string(enemy->getLevel())
+				+ "\nZycie: " + std::to_string(enemy->getHp())
+				+ "\nMana: " + std::to_string(enemy->getMana());
+			const char * inf = info.c_str();
+			System::String^ text = gcnew String(inf);
+			this->label5->Text = text;
+		}
 	}
 
 	private: void showItemInfo(System::Windows::Forms::Label^ label, Items* item) {
@@ -1068,6 +1141,13 @@ namespace PORPGv2 {
 		}
 	}
 
+	private: void updateBattleLog(std::string log) {
+		//std::string log = "Rozpoczales walke z " + game->getMap()->getEnemies()[0]->getName();
+		const char* text = log.c_str();
+		System::String^ tmp = gcnew String(text);
+		this->listBox1->Items->Add(tmp);
+	}
+
 	private: Items * getSelectedItemNpc(System::Windows::Forms::ComboBox^ comboBox) {
 		Items *item = new Items();
 		System::Object^ choose = comboBox->SelectedItem;
@@ -1090,7 +1170,7 @@ namespace PORPGv2 {
 		return game->getPlayer()->getBp()[i];
 	}
 
-	private: Skills * getSelectedSkill(System::Windows::Forms::ComboBox^ comboBox) {
+	private: Skills * getSelectedSkillNpc(System::Windows::Forms::ComboBox^ comboBox) {
 		Skills* skill = new Skills();
 		System::Object^ choose = comboBox->SelectedItem;
 		if (!choose) return skill;
@@ -1100,7 +1180,16 @@ namespace PORPGv2 {
 		choosenItem = i;
 		return game->getMap()->getNpcs()[choosenNpc]->getSkills()[i];
 	}
-
+	private: Skills * getSelectedSkillPlayer(System::Windows::Forms::ComboBox^ comboBox) {
+		Skills* skill = new Skills();
+		System::Object^ choose = comboBox->SelectedItem;
+		if (!choose) return skill;
+		System::String^ name = choose->ToString();
+		std::string strname = msclr::interop::marshal_as<std::string>(name);
+		int i = strname[0] - 49;
+		choosenItem = i;
+		return game->getPlayer()->getSkills()[i];
+	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->startButton->Visible = true;
 		this->textBox1->Visible = true;
@@ -1176,11 +1265,23 @@ namespace PORPGv2 {
 
 	}
 	private: System::Void button14_Click(System::Object^  sender, System::EventArgs^  e) {
+		for (int j = 0; j < game->getPlayer()->getSkills().size(); j++)
+		{
+			std::string name = game->getPlayer()->getSkills()[j]->getName();
+			std::string type = game->getPlayer()->getSkills()[j]->getType();
+			std::string tmpp = std::to_string(j + 1) + ". " + name + " " + type;
+			const char *ttemp = tmpp.c_str();
+			System::String^ st = gcnew String(ttemp);
+			this->comboBox7->Items->Add(st);
+		}
 		this->button10->Enabled = true;
 		this->button11->Enabled = true;
 		this->button12->Enabled = true;
 		this->button13->Enabled = false;
 		this->button14->Enabled = false;
+		std::string log = "Rozpoczales walke z " + game->getMap()->getEnemies()[0]->getName();
+		updateBattleLog(log);
+
 	}
 	private: System::Void button13_Click(System::Object^  sender, System::EventArgs^  e) {
 
@@ -1210,7 +1311,7 @@ namespace PORPGv2 {
 	}
 
 	private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) {
-		Skills* skill = getSelectedSkill(this->comboBox5);
+		Skills* skill = getSelectedSkillNpc(this->comboBox5);
 		showSkillInfo(this->label6, skill);
 	}
 	private: System::Void button1_Click_2(System::Object^  sender, System::EventArgs^  e) {
@@ -1283,7 +1384,7 @@ namespace PORPGv2 {
 		}
 	}
 	private: System::Void button15_Click(System::Object^  sender, System::EventArgs^  e) {
-		Skills* skill = getSelectedSkill(this->comboBox5);
+		Skills* skill = getSelectedSkillNpc(this->comboBox5);
 		if (skill->getName() != "Nieznany")
 		{
 			game->getPlayer()->learnSkill(skill, game->getMap()->getNpcs()[choosenNpc]);
@@ -1297,6 +1398,49 @@ namespace PORPGv2 {
 			game->getPlayer()->addItemToInv(item, choosenItem);
 			updatePlayerInfo();
 		}
+	}
+	private: System::Void button10_Click(System::Object^  sender, System::EventArgs^  e) {
+		std::string log = "Atakujesz za: " + std::to_string(game->getPlayer()->attack());
+		game->getMap()->getEnemies()[0]->getHit(game->getPlayer()->attack());
+		updateBattleLog(log);
+		updatePlayerInfo();
+		if (game->getMap()->getEnemies()[0]->getHp() <= 0)
+		{
+			nextEnemy();
+		}
+		showEnemyInfo(game->getMap()->getEnemies()[0]);
+
+
+	}
+	private: System::Void button11_Click(System::Object^  sender, System::EventArgs^  e) {
+		std::string log = "Bronisz (zwiekszony pancerz) ";// +std::to_string(game->getPlayer()->defend());
+		updateBattleLog(log);
+		updatePlayerInfo();
+		showEnemyInfo(game->getMap()->getEnemies()[0]);
+	}
+	private: System::Void button12_Click(System::Object^  sender, System::EventArgs^  e) {
+		Skills* skill = getSelectedSkillPlayer(this->comboBox7);
+		if (skill->getName() == "Nieznany")
+		{
+
+		}
+		else
+		{
+			std::string log = "Rzucasz zaklecie: " + skill->getName();
+			game->getMap()->getEnemies()[0]->getHit(game->getPlayer()->useSkill(skill));
+			updateBattleLog(log);
+			updatePlayerInfo();
+			if (game->getMap()->getEnemies()[0]->getHp() <= 0)
+			{
+				nextEnemy();
+			}
+			showEnemyInfo(game->getMap()->getEnemies()[0]);
+		}
+
+	}
+	private: System::Void comboBox7_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+		Skills* skill = getSelectedSkillPlayer(this->comboBox7);
+		showSkillInfo(this->label10, skill);
 	}
 	};
 }
