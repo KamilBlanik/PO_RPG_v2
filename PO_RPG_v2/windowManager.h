@@ -540,7 +540,7 @@ namespace PORPGv2 {
 				 // label5
 				 // 
 				 this->label5->AutoSize = true;
-				 this->label5->Location = System::Drawing::Point(415, 80);
+				 this->label5->Location = System::Drawing::Point(421, 80);
 				 this->label5->Name = L"label5";
 				 this->label5->Size = System::Drawing::Size(168, 51);
 				 this->label5->TabIndex = 31;
@@ -893,7 +893,7 @@ namespace PORPGv2 {
 		this->label1->Visible = false;
 		this->label2->Visible = false;
 		this->label3->Visible = false;
-		this->label4->Visible = false;
+		this->label4->Visible = true;
 		this->label5->Visible = true;
 		this->label6->Visible = false;
 		this->label7->Visible = true;
@@ -931,6 +931,29 @@ namespace PORPGv2 {
 			System::String^ npc = gcnew String(tmp2);
 			this->comboBox2->Items->Add(npc);
 		}
+	}
+
+	private: void generateDungeon() {
+		MapGenerator* dungeon = game->getMap();
+		std::vector<Enemy*> enemies = dungeon->getEnemies();
+		std::string dungNameText = "Trafiles do : " + dungeon->getName()
+			+ "\nIlosc przeciwnikow: " + std::to_string(dungeon->getEnemies().size());
+		const char* tmp1 = dungNameText.c_str();
+		System::String^ tmp = gcnew String(tmp1);
+		this->label4->Text = tmp;
+		showEnemyInfo(dungeon->getEnemies()[0]);
+
+	}
+
+	private: void showEnemyInfo(Enemy* enemy) {
+		std::string info = "Natrafiles na przeciwnika!\nNazwa: "
+			+ enemy->getName()
+			+ "\nPoziom: " + std::to_string(enemy->getLevel())
+			+ "\nZycie: " + std::to_string(enemy->getHp())
+			+ "\nMana: " + std::to_string(enemy->getMana());
+		const char * inf = info.c_str();
+		System::String^ text = gcnew String(inf);
+		this->label5->Text = text;
 	}
 
 	private: void showItemInfo(System::Windows::Forms::Label^ label, Items* item) {
@@ -1145,7 +1168,11 @@ namespace PORPGv2 {
 
 	}
 	private: System::Void button3_Click_1(System::Object^  sender, System::EventArgs^  e) {
+		game->goToDangeon(game->getPlayer());
+		generateDungeon();
 		dungeonLayout();
+		updatePlayerInfo();
+
 
 	}
 	private: System::Void button14_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -1248,22 +1275,28 @@ namespace PORPGv2 {
 	}
 	private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
 		Items* item = getSelectedItemPlayer(this->comboBox3);
-		game->getPlayer()->sellItem(choosenItem,game->getMap()->getNpcs()[choosenNpc]);
-		updatePlayerInfo();
-		updateTraderInfo();
+		if (item->getName() != "Nieznany")
+		{
+			game->getPlayer()->sellItem(choosenItem, game->getMap()->getNpcs()[choosenNpc]);
+			updatePlayerInfo();
+			updateTraderInfo();
+		}
 	}
 	private: System::Void button15_Click(System::Object^  sender, System::EventArgs^  e) {
 		Skills* skill = getSelectedSkill(this->comboBox5);
-		game->getPlayer()->learnSkill(skill,game->getMap()->getNpcs()[choosenNpc]);
-		updatePlayerInfo();
-		updateTraderInfo();
+		if (skill->getName() != "Nieznany")
+		{
+			game->getPlayer()->learnSkill(skill, game->getMap()->getNpcs()[choosenNpc]);
+			updatePlayerInfo();
+			updateTraderInfo();
+		}
 	}
 	private: System::Void button20_Click(System::Object^  sender, System::EventArgs^  e) {
 		Items* item = getSelectedItemPlayer(this->comboBox6);
 		if (item->getName() != "Nieznany") {
-			game->getPlayer()->addItemToInv(item,choosenItem);
+			game->getPlayer()->addItemToInv(item, choosenItem);
 			updatePlayerInfo();
 		}
 	}
-};
+	};
 }

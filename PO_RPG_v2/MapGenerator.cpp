@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MapGenerator.h"
 
-std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
+std::vector<Enemy*> MapGenerator::spawnEnemies(int count,MapGenerator* dungeon) {
 	std::string name[5] = { "Gnom","Troll","Chochlik","Zywiolak","Golem" };
 	std::vector<Enemy*> enemies;
 	std::vector<Items*> loot;
@@ -13,7 +13,7 @@ std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
 	{
 		j = rand() % 5;
 		enemy->setName(name[j]);
-		enemy->setLevel(this->difficult);
+		enemy->setLevel(dungeon->getDifficult());
 		enemy->setHp(enemy->getLevel() * 50 + 75);
 		enemy->setArmor(rand() % 5 + enemy->getLevel() * 5);
 		enemy->setDmg(rand() % 10 + 5 + 5 * enemy->getLevel());
@@ -186,7 +186,7 @@ MapGenerator* MapGenerator::generateDungeon() {
 	int lvl = rand() % 11;
 	dungeon->setName(dungeonName[i]);
 	dungeon->setDifficult(lvl);
-	dungeon->setEnemies(spawnEnemies(j));
+	dungeon->setEnemies(spawnEnemies(j,dungeon));
 	return dungeon;
 }
 

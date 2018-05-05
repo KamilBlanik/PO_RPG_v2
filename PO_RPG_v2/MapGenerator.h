@@ -14,7 +14,7 @@ private:
 	std::vector<Npc*> npcs;
 	std::vector<Enemy*> enemies;
 
-	std::vector<Enemy*> spawnEnemies(int count);
+	std::vector<Enemy*> spawnEnemies(int count,MapGenerator* dungeon);
 	std::vector<Npc*> spawnNpcs(int count);
 	Items* generateItem();
 	Skills* generateSkill();
