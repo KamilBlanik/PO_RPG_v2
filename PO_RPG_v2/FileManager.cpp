@@ -64,7 +64,7 @@ Player * FileManager::loadGame(std::string fileName) {
 				item = new Items();
 				load >> item;
 				if (!item->check)
-					tmp->addItemToInv(item,0);
+					tmp->addItemToInv(item);
 			}
 			line = "";
 			while (!load.eof())

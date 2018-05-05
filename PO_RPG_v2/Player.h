@@ -23,6 +23,7 @@ public:
 	void setSkillPoints(int sp);
 	void setMoney(int money);
 	void addItemToInv(Items *item, int controll);
+	void addItemToInv(Items *item);
 	void addItemToBp(Items *item);
 	void deleteItemFromInv(int i);
 	void deleteItemFromBp(int i);

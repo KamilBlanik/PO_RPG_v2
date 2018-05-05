@@ -179,6 +179,11 @@ void Player::addItemToInv(Items *item, int controll) {
 		
 }
 
+void Player::addItemToInv(Items *item) {
+	this->inventory.push_back(item);
+
+}
+
 void Player::deleteItemFromBp(int i) {
 
 	//delete this->backpack[i];
