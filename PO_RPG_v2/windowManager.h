@@ -940,6 +940,7 @@ namespace PORPGv2 {
 		this->label7->Visible = true;
 		this->label8->Visible = false;
 		this->label9->Visible = false;
+		this->label10->Visible = true;
 
 		this->button10->Visible = true;
 		this->button11->Visible = true;
@@ -1057,7 +1058,12 @@ namespace PORPGv2 {
 
 	private: void showSkillInfo(System::Windows::Forms::Label^ label, Skills* skill) {
 		label->ResetText();
-		std::string info = "\n" + skill->getName() + "\nTyp: " + skill->getType() + "\nCena: " + std::to_string(skill->getPrice()) + "\nWartosc bonusu: " + std::to_string(skill->getValue()) + "\nWymagany poziom: " + std::to_string(skill->getSkillLevel());
+		std::string info = "\n" + skill->getName() 
+			+ "\nTyp: " + skill->getType() 
+			+ "\nCena: " + std::to_string(skill->getPrice()) 
+			+ "\nWartosc bonusu: " + std::to_string(skill->getValue()) 
+			+ "\nKoszt many: " + std::to_string(skill->getMana())
+			+ "\nWymagany poziom: " + std::to_string(skill->getSkillLevel());
 		const char* text = info.c_str();
 		System::String^ tmp = gcnew String(text);
 		label->Text += tmp;
@@ -1472,7 +1478,7 @@ namespace PORPGv2 {
 			updatePlayerInfo();
 			checkAlive();
 		}
-
+		updatePlayerInfo();
 
 
 
@@ -1484,7 +1490,7 @@ namespace PORPGv2 {
 		}
 		std::string log = "Bronisz (zwiekszony pancerz) ";// +std::to_string(game->getPlayer()->defend());
 		updateBattleLog(log);
-
+		game->getPlayer()->defend();
 		showEnemyInfo(game->getMap()->getEnemies()[0]);
 		enemyTour();
 		updatePlayerInfo();
@@ -1519,7 +1525,7 @@ namespace PORPGv2 {
 
 
 		}
-
+		updatePlayerInfo();
 	}
 	private: System::Void comboBox7_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 		Skills* skill = getSelectedSkillPlayer(this->comboBox7);

@@ -70,19 +70,22 @@ int Character::useSkill(Skills* skill) {
 	{
 		if (skill->getType() == "Leczacy") {
 			increaseHp(skill->getValue());
+			this->mana -= skill->getMana();
 			return 0;
 		}
 		if (skill->getType() == "Defensywny") {
 			incrasedArmor = true;
 			increaseArmor(skill->getValue());
 			incrasedArmorVal = skill->getValue();
+			this->mana -= skill->getMana();
 			return 0;
 		}
 		if (skill->getType() == "Ofensywny") {
+			this->mana -= skill->getMana();
 			return skill->getValue();
 
 		}
-		this->mana -= skill->getMana();
+		
 	}
 }
 void Character::refresh() {

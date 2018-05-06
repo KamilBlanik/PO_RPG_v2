@@ -135,6 +135,7 @@ Skills* MapGenerator::generateSkill() {
 	int value;
 	int price;
 	int skillLevel;
+	int manaCost;
 	//srand(time(NULL));
 	skillLevel = rand() % 11;
 	int i = rand() % 3;
@@ -159,8 +160,9 @@ Skills* MapGenerator::generateSkill() {
 	default:
 		break;
 	}
+	manaCost = rand() % 5 + 5 + 10 * skillLevel;
 	price = rand() % 100 + 100 + 50 * skillLevel;
-	Skills* skill = new Skills(name, type[i], value, price, skillLevel);
+	Skills* skill = new Skills(name, type[i],manaCost, value, price, skillLevel);
 	return skill;
 
 }
@@ -185,6 +187,9 @@ MapGenerator* MapGenerator::generateDungeon() {
 	int i = rand() % 5;
 	int j = rand() % 4 + 2;
 	int lvl = rand() % 11;
+	setName(dungeonName[i]);
+	setDifficult(lvl);
+	setEnemies(spawnEnemies(j));
 	dungeon->setName(dungeonName[i]);
 	dungeon->setDifficult(lvl);
 	dungeon->setEnemies(spawnEnemies(j));

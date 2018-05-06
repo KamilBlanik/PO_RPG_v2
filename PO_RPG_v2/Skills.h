@@ -17,7 +17,7 @@ private:
 	
 public:
 	bool check;
-	Skills(std::string name, std::string type, int value, int price, int skillLevel);
+	Skills(std::string name, std::string type, int mana, int value, int price, int skillLevel);
 	Skills();
 	~Skills();
 	void setName(std::string name);
