@@ -14,10 +14,8 @@ GameManager::~GameManager() {
 }
 
 void GameManager::killEnemy() {
-	LevelManager *man = new LevelManager();
-	man->experienceManagement(this->player, this->map->getEnemies()[0]);
 	delete this->map->getEnemies()[0];
-	this->map->getEnemies().erase(this->map->getEnemies().begin()+0);
+	this->map->getEnemies().erase(this->map->getEnemies().begin() + 0);
 }
 
 void GameManager::goToDangeon(Player* player) {

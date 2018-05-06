@@ -77,7 +77,8 @@ namespace PORPGv2 {
 
 
 
-	private: GameManager * game = new GameManager();
+			 GameManager * game = new GameManager();
+			 LevelManager* lvl = new LevelManager();
 	private: System::Windows::Forms::Button^  button15;
 	private: System::Windows::Forms::ComboBox^  comboBox5;
 	private: System::Windows::Forms::Button^  button16;
@@ -993,7 +994,7 @@ namespace PORPGv2 {
 		MapGenerator* dungeon = game->getMap();
 		std::string dungNameText = "Trafiles do : " + dungeon->getName()
 			+ "\nIlosc przeciwnikow: " + std::to_string(dungeon->getEnemies().size())
-			+"\nPoziom trudnosci: :"+std::to_string(dungeon->getDifficult());
+			+ "\nPoziom trudnosci: :" + std::to_string(dungeon->getDifficult());
 		const char* tmp1 = dungNameText.c_str();
 		System::String^ tmp = gcnew String(tmp1);
 		this->label4->Text = tmp;
@@ -1001,7 +1002,6 @@ namespace PORPGv2 {
 	private: void nextEnemy() {
 		this->listBox1->Items->Clear();
 
-		game->getPlayer()->addItemToBp(game->getMap()->getEnemies()[0]->dropItem());
 		std::string log = "Zabiles przeciwnika!";
 		updateBattleLog(log);
 		log = "Znalazles przy nim: "
@@ -1014,6 +1014,12 @@ namespace PORPGv2 {
 		this->button12->Enabled = false;
 		this->button13->Enabled = true;
 		this->button14->Enabled = true;
+		lvl->getExp(game->getPlayer(), game->getMap()->getEnemies()[0]);
+		if (game->getPlayer()->getExp() >= lvl->maxExpPerLevel&&game->getPlayer()->getLevel() < lvl->maxLevel) {
+			log = "Awansowales!";
+			updateBattleLog(log);
+			lvl->levelUp(game->getPlayer());
+		}
 		game->getMap()->killEnemy();
 		if (game->getMap()->getEnemies().size() == 0) {
 			game->goToDangeon(game->getPlayer());
@@ -1030,7 +1036,7 @@ namespace PORPGv2 {
 			showDungeonInfo();
 			showEnemyInfo(game->getMap()->getEnemies()[0]);
 		}
-
+		updatePlayerInfo();
 
 
 	}
@@ -1058,10 +1064,10 @@ namespace PORPGv2 {
 
 	private: void showSkillInfo(System::Windows::Forms::Label^ label, Skills* skill) {
 		label->ResetText();
-		std::string info = "\n" + skill->getName() 
-			+ "\nTyp: " + skill->getType() 
-			+ "\nCena: " + std::to_string(skill->getPrice()) 
-			+ "\nWartosc bonusu: " + std::to_string(skill->getValue()) 
+		std::string info = "\n" + skill->getName()
+			+ "\nTyp: " + skill->getType()
+			+ "\nCena: " + std::to_string(skill->getPrice())
+			+ "\nWartosc bonusu: " + std::to_string(skill->getValue())
 			+ "\nKoszt many: " + std::to_string(skill->getMana())
 			+ "\nWymagany poziom: " + std::to_string(skill->getSkillLevel());
 		const char* text = info.c_str();
@@ -1127,21 +1133,15 @@ namespace PORPGv2 {
 		this->comboBox6->ResetText();
 		this->label7->ResetText();
 
-		/*std::vector<Items*> itemss = player->getBp();
-		Items* item = itemss[0];
-		int p = item->getPrice();*/
-
 		std::string t = "Statystyki gracza: " + player->getName()
 			+ "\nPieniadze: " + std::to_string(player->getMoney())
 			+ "\nPoziom: " + std::to_string(player->getLevel())
-			+ "\nExp:" + std::to_string(player->getExp())
+			+ "\nExp:" + std::to_string(player->getExp()) + "/" + std::to_string(lvl->maxExpPerLevel)
 			+ "\nPunkty umiejetnosci: " + std::to_string(player->getSkillPoints())
 			+ "\nZycie: " + std::to_string(player->getHp() + player->getBonusHp())
 			+ "\nPancerz:	" + std::to_string(player->getArmor() + player->getBonusArmor())
 			+ "\nMana: " + std::to_string(player->getMana() + player->getBonusMana())
 			+ "\nObrazenia: " + std::to_string(player->getDmg() + player->getBonusDmg())
-			+ "\nExp:" + std::to_string(player->getExp())
-			//+ "\nPunkty umiejetnosci: " + std::to_string(p)
 			+ "\nIlosc umjejetnosci: " + std::to_string(player->getSkills().size())
 			+ "\nIlosc przedmiotow: " + std::to_string(player->getBp().size());
 		std::string items = "\nUbierane przedmioty:";
