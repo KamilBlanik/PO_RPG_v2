@@ -3,13 +3,17 @@
 
 #include "stdafx.h"
 #include "Player.h"
-
+#include "Enemy.h"
 class LevelManager {
+private:
+	int maxExpPerLevel = 100;
+	int maxLevel = 10;
+	void levelUp(Player* player);
+	void setMaxExp(Player* player);
 public:
-	int maxExpPerLevel;
-	Player player;
-	void levelUp(Player player);
-	void experienceManagement(Player player);
+	
+	void experienceManagement(Player* player,Enemy* enemy);
+	
 };
 
 #endif

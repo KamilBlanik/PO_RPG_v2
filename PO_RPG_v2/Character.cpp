@@ -17,6 +17,8 @@ Character::Character() {
 	skill.empty();
 	incrasedArmor = false;
 	incrasedArmorVal = 0;
+	maxHp = health;
+	maxMana = mana;
 }
 
 Character::~Character() {
@@ -34,6 +36,8 @@ Character::~Character() {
 	incrasedArmor = false;
 	incrasedArmorVal = 0;
 	skill.clear();
+	maxHp = health;
+	maxMana = mana;
 }
 
 int Character::attack() {
@@ -62,20 +66,36 @@ bool Character::checkAlive() {
 }
 
 int Character::useSkill(Skills* skill) {
-	if (skill->getType() == "Leczacy") {
-		increaseHp(skill->getValue());
-		return 0;
+	if (this->mana-skill->getMana()>=0)
+	{
+		if (skill->getType() == "Leczacy") {
+			increaseHp(skill->getValue());
+			return 0;
+		}
+		if (skill->getType() == "Defensywny") {
+			incrasedArmor = true;
+			increaseArmor(skill->getValue());
+			incrasedArmorVal = skill->getValue();
+			return 0;
+		}
+		if (skill->getType() == "Ofensywny") {
+			return skill->getValue();
+
+		}
+		this->mana -= skill->getMana();
 	}
-	if (skill->getType() == "Defensywny") {
-		incrasedArmor = true;
-		increaseArmor(skill->getValue());
-		incrasedArmorVal = skill->getValue();
-		return 0;
-	}
-	if (skill->getType() == "Ofensywny") {
-		return skill->getValue();
-		
-	}
+}
+void Character::refresh() {
+	mana = maxMana;
+	health = maxHp;
+}
+
+void Character::increaseMaxHp(int value) {
+	this->maxHp += value;
+}
+
+void Character::increaseMaxMana(int value) {
+	this->maxMana += value;
 }
 
 void Character::setName(std::string name) {

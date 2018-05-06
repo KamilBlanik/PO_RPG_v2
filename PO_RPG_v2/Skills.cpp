@@ -13,6 +13,7 @@ Skills::Skills() {
 	name = "Nieznany";
 	type = "Nieznany";
 	value = 0;
+	mana = 0;
 	price = 0;
 	skillLevel = 0;
 	check = false;
@@ -21,6 +22,7 @@ Skills::Skills() {
 Skills::~Skills() {
 	name = "Nieznany";
 	type = "Nieznany";
+	mana = 0;
 	value = 0;
 	price = 0;
 	skillLevel = 0;
@@ -46,7 +48,9 @@ void Skills::setPrice(int price) {
 void Skills::setSkillLevel(int lvl) {
 	this->skillLevel = lvl;
 }
-
+void Skills::setMana(int val) {
+	this->mana = val;
+}
 std::string Skills::getName() {
 	return name;
 }
@@ -65,6 +69,10 @@ int Skills::getPrice() {
 
 int Skills::getSkillLevel() {
 	return skillLevel;
+}
+
+int Skills::getMana() {
+	return this->mana;
 }
 
 std::ostream& operator<<(std::ostream& out, Skills * skill) {

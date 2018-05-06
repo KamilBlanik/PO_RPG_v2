@@ -724,9 +724,10 @@ namespace PORPGv2 {
 				 this->label10->AutoSize = true;
 				 this->label10->Location = System::Drawing::Point(613, 517);
 				 this->label10->Name = L"label10";
-				 this->label10->Size = System::Drawing::Size(125, 17);
+				 this->label10->Size = System::Drawing::Size(120, 17);
 				 this->label10->TabIndex = 46;
-				 this->label10->Text = L"Aktualnie ubierany";
+				 this->label10->Text = L"Wybrane zaklecie";
+				 this->label10->Visible = false;
 				 // 
 				 // windowManager
 				 // 
@@ -891,15 +892,18 @@ namespace PORPGv2 {
 		this->label2->Visible = false;
 		this->label3->Visible = false;
 		this->label4->Visible = false;
+		this->label5->Visible = false;
 		this->label6->Visible = false;
 		this->label7->Visible = false;
 		this->label8->Visible = false;
 		this->label9->Visible = false;
+		this->label10->Visible = false;
 		this->newGameButton->Visible = true;
 		this->loadButton->Visible = true;
 		this->exitButton->Visible = true;
 		this->listBox1->Visible = false;
 		this->pictureBox1->Visible = false;
+		this->pictureBox2->Visible = false;
 
 	}
 
@@ -945,6 +949,8 @@ namespace PORPGv2 {
 		this->button10->Enabled = false;
 		this->button11->Enabled = false;
 		this->button12->Enabled = false;
+		this->button13->Enabled = true;
+		this->button14->Enabled = true;
 		this->listBox1->Visible = true;
 		this->pictureBox1->Visible = false;
 		this->pictureBox2->Visible = true;
@@ -985,13 +991,15 @@ namespace PORPGv2 {
 	private: void showDungeonInfo() {
 		MapGenerator* dungeon = game->getMap();
 		std::string dungNameText = "Trafiles do : " + dungeon->getName()
-			+ "\nIlosc przeciwnikow: " + std::to_string(dungeon->getEnemies().size());
+			+ "\nIlosc przeciwnikow: " + std::to_string(dungeon->getEnemies().size())
+			+"\nPoziom trudnosci: :"+std::to_string(dungeon->getDifficult());
 		const char* tmp1 = dungNameText.c_str();
 		System::String^ tmp = gcnew String(tmp1);
 		this->label4->Text = tmp;
 	}
 	private: void nextEnemy() {
 		this->listBox1->Items->Clear();
+
 		game->getPlayer()->addItemToBp(game->getMap()->getEnemies()[0]->dropItem());
 		std::string log = "Zabiles przeciwnika!";
 		updateBattleLog(log);
@@ -1005,16 +1013,20 @@ namespace PORPGv2 {
 		this->button12->Enabled = false;
 		this->button13->Enabled = true;
 		this->button14->Enabled = true;
-
 		game->getMap()->killEnemy();
 		if (game->getMap()->getEnemies().size() == 0) {
 			game->goToDangeon(game->getPlayer());
+			generateDungeon();
 			this->listBox1->Items->Clear();
-			log = "Po pokonaniu wszystki przeciwnikow trafiles do nasetpnego lochu";
-			showDungeonInfo();
+			log = "Po pokonaniu wszystki przeciwnikow trafiles";
 			updateBattleLog(log);
+			log = " do nasetpnego lochu";
+			updateBattleLog(log);
+			showDungeonInfo();
+
 		}
 		else {
+			showDungeonInfo();
 			showEnemyInfo(game->getMap()->getEnemies()[0]);
 		}
 
@@ -1207,9 +1219,11 @@ namespace PORPGv2 {
 		int val = game->getMap()->getEnemies()[0]->attack();
 		if (val == 0) {
 			log = "Przeciwnik cos knuje, nie zaatakowal cie.";
+			updateBattleLog(log);
 		}
 		else {
 			log = "Pzeciwnik uderza za: " + std::to_string(val);
+			updateBattleLog(log);
 			game->getPlayer()->getHit(val);
 		}
 
@@ -1273,7 +1287,7 @@ namespace PORPGv2 {
 			menuLayout();
 			this->label4->Visible = true;
 			this->label4->Text = "PRZEGRALES!";
-		
+
 		}
 	}
 	private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
@@ -1294,6 +1308,11 @@ namespace PORPGv2 {
 		generateDungeon();
 		dungeonLayout();
 		updatePlayerInfo();
+		for (int i = 0; i < game->getMap()->getEnemies().size(); i++)
+		{
+			std::string log = game->getMap()->getEnemies()[i]->getName();
+			updateBattleLog(log);
+		}
 
 
 	}
@@ -1358,6 +1377,7 @@ namespace PORPGv2 {
 		}
 		else {
 			game->getPlayer()->increaseHp(25);
+			game->getPlayer()->increaseMaxHp(25);
 			game->getPlayer()->setSkillPoints(game->getPlayer()->getSkillPoints() - 1);
 			updatePlayerInfo();
 		}
@@ -1370,6 +1390,7 @@ namespace PORPGv2 {
 		}
 		else {
 			game->getPlayer()->increaseMana(10);
+			game->getPlayer()->increaseMaxMana(10);
 			game->getPlayer()->setSkillPoints(game->getPlayer()->getSkillPoints() - 1);
 			updatePlayerInfo();
 		}
@@ -1418,7 +1439,7 @@ namespace PORPGv2 {
 	}
 	private: System::Void button15_Click(System::Object^  sender, System::EventArgs^  e) {
 		Skills* skill = getSelectedSkillNpc(this->comboBox5);
-		if (skill->getName() != "Nieznany")
+		if (skill->getName() != "Nieznany" || skill->getSkillLevel() <= game->getPlayer()->getLevel())
 		{
 			game->getPlayer()->learnSkill(skill, game->getMap()->getNpcs()[choosenNpc]);
 			updatePlayerInfo();

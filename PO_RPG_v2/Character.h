@@ -28,10 +28,13 @@ public:
 	void setBonusHp(int bonus);
 	void increaseLevel(int value);
 	void increaseHp(int value);
+	void increaseMaxHp(int value);
+	void increaseMaxMana(int value);
 	void increaseMana(int value);
 	void increaseArmor(int value);
 	void addSkill(Skills* skill);
 	void deleteSkill(int i);
+	void refresh();
 	std::string getName();
 	int getLevel();
 	int getHp();
@@ -57,6 +60,8 @@ protected:
 	int bonusMana;
 	int baseDmg;
 	int bonusDmg;
+	int maxHp;
+	int maxMana;
 	
 	
 	std::vector<Skills*> skill;

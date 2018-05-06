@@ -1,19 +1,20 @@
 #include "stdafx.h"
 #include "MapGenerator.h"
 
-std::vector<Enemy*> MapGenerator::spawnEnemies(int count,MapGenerator* dungeon) {
+std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
 	std::string name[5] = { "Gnom","Troll","Chochlik","Zywiolak","Golem" };
 	std::vector<Enemy*> enemies;
 	std::vector<Items*> loot;
 	Enemy* enemy = new Enemy();
 	Items* item = new Items();
 	int j;
-	srand(time(NULL));
+	//srand(time(NULL));
 	for (int i = 0; i < count; i++)
 	{
+		enemy = new Enemy();
 		j = rand() % 5;
 		enemy->setName(name[j]);
-		enemy->setLevel(dungeon->getDifficult());
+		enemy->setLevel(getDifficult());
 		enemy->setHp(enemy->getLevel() * 50 + 75);
 		enemy->setArmor(rand() % 5 + enemy->getLevel() * 5);
 		enemy->setDmg(rand() % 10 + 5 + 5 * enemy->getLevel());
@@ -186,7 +187,7 @@ MapGenerator* MapGenerator::generateDungeon() {
 	int lvl = rand() % 11;
 	dungeon->setName(dungeonName[i]);
 	dungeon->setDifficult(lvl);
-	dungeon->setEnemies(spawnEnemies(j,dungeon));
+	dungeon->setEnemies(spawnEnemies(j));
 	return dungeon;
 }
 
@@ -215,7 +216,8 @@ void MapGenerator::setNpcs(std::vector<Npc*> vec) {
 }
 
 void MapGenerator::killEnemy() {
-	//delete this->enemies[0];
+	
+	delete this->enemies[0];
 	this->enemies.erase(enemies.begin());
 }
 

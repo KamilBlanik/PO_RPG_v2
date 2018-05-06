@@ -297,10 +297,12 @@ Player* operator>>(std::ifstream& in, Player * player) {
 	player->setLevel(stoi(line));
 	std::getline(in, line);
 	player->setHp(stoi(line));
+	player->increaseMaxHp(stoi(line)-100);
 	std::getline(in, line);
 	player->setArmor(stoi(line));
 	std::getline(in, line);
 	player->setMana(stoi(line));
+	player->increaseMaxMana(stoi(line));
 	std::getline(in, line);
 	player->setDmg(stoi(line));
 	std::getline(in, line);

@@ -3,9 +3,8 @@
 
 #include <iostream>
 #include "stdafx.h"
-#include "Player.h"
 #include "MapGenerator.h"
-#include "CombatManager.h"
+#include "LevelManager.h"
 
 class GameManager {
 private:
