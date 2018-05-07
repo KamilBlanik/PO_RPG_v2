@@ -637,7 +637,7 @@ namespace PORPGv2 {
 				 this->button18->Name = L"button18";
 				 this->button18->Size = System::Drawing::Size(125, 39);
 				 this->button18->TabIndex = 38;
-				 this->button18->Text = L"Wydaj PU na 10 ataku";
+				 this->button18->Text = L"Wydaj PU na 5 ataku";
 				 this->button18->UseVisualStyleBackColor = true;
 				 this->button18->Visible = false;
 				 this->button18->Click += gcnew System::EventHandler(this, &windowManager::button18_Click);
@@ -1301,6 +1301,7 @@ namespace PORPGv2 {
 		Player* player = new Player();
 		player->setName(playerName);
 		game->goToCity(player);
+		lvl->setMaxExp(game->getPlayer());
 		cityLayout();
 		generateCity();
 		updatePlayerInfo();
