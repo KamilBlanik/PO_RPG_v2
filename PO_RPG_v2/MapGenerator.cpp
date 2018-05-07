@@ -6,14 +6,13 @@ std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
 	std::vector<Enemy*> enemies;
 	std::vector<Items*> loot;
 	std::vector<Skills*> skills;
-	Enemy* enemy = new Enemy();
-	Items* item = new Items();
+	Enemy* enemy;
+	Items* item ;
 	Skills* skill;
 	int j;
 	//srand(time(NULL));
 	for (int i = 0; i < count; i++)
 	{
-		skill = new Skills();
 		enemy = new Enemy();
 		j = rand() % 5;
 		enemy->setName(name[j]);
@@ -26,12 +25,14 @@ std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
 		int k = rand() % 5 + 1;
 		for (int e = 0; e < k; e++)
 		{
+			item = new Items();
 			item = generateItem();
 			loot.push_back(item);
 		}
 		int w = rand() % 3 + 1;
 		for (int x = 0; x < w; x++)
 		{
+			skill = new Skills();
 			skill = generateSkill();
 			enemy->addSkill(skill);
 		}
@@ -178,7 +179,7 @@ Skills* MapGenerator::generateSkill() {
 
 MapGenerator* MapGenerator::generateCity() {
 	MapGenerator* map = new MapGenerator();
-	std::string cityName[5] = { "Wroclaw","Rybink","Kielce","Warszawa","Radom" };
+	std::string cityName[5] = { "Wroclaw","Rybnik","Kielce","Warszawa","Radom" };
 	srand(time(NULL));
 	int i = rand() % 5;
 	int j = rand() % 4 + 2;

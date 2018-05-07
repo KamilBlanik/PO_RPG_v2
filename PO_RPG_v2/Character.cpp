@@ -51,7 +51,7 @@ void Character::defend() {
 }
 
 void Character::getHit(int damage) {
-	health = health - int(damage-(damage*((armor+bonusArmor)/200)));
+	this->health = this->health - int(damage-(damage*((armor+bonusArmor)/200)));
 	
 }
 
