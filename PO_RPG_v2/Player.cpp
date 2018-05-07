@@ -17,14 +17,6 @@ Player::~Player() {
 
 }
 
-void Player::escape() {
-
-}
-
-void Player::talkToNpc(Npc *npc) {
-
-}
-
 void Player::setExp(int exp) {
 	this->experience = exp;
 }

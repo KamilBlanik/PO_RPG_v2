@@ -825,6 +825,7 @@ namespace PORPGv2 {
 		this->label7->Visible = true;
 		this->label8->Visible = true;
 		this->label9->Visible = true;
+		this->label10->Visible = false;
 
 		this->startButton->Visible = false;
 		this->startGameButton->Visible = false;

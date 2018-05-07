@@ -10,7 +10,6 @@ std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
 	Items* item ;
 	Skills* skill;
 	int j;
-	//srand(time(NULL));
 	for (int i = 0; i < count; i++)
 	{
 		enemy = new Enemy();

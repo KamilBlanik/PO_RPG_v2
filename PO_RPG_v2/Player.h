@@ -27,9 +27,6 @@ public:
 	void addItemToBp(Items *item);
 	void deleteItemFromInv(int i);
 	void deleteItemFromBp(int i);
-	void escape();
-	//void statsManagement();
-	void talkToNpc(Npc *npc);
 	void incraseMoney(int i);
 	void subbMoney(int i);
 	void buyItem(int i,Npc* npc);
