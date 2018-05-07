@@ -13,10 +13,7 @@ GameManager::~GameManager() {
 	delete map;
 }
 
-void GameManager::killEnemy() {
-	delete this->map->getEnemies()[0];
-	this->map->getEnemies().erase(this->map->getEnemies().begin() + 0);
-}
+
 
 void GameManager::goToDangeon(Player* player) {
 	this->player = player;

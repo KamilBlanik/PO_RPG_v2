@@ -15,9 +15,13 @@ private:
 public:
 	Enemy();
 	~Enemy();
+	//losowanie przedmiotu z wektora 
 	Items* dropItem();
+	//pobieranie wartosci wektora obiektu klasy Enemy
 	std::vector<Items*> getLoot();
+	//ustawienie wartosci wektora obiektu klasy Enemy
 	void setLoot(std::vector<Items*> loot);
+	//losowanie ataku obiektu kalasy Enemy
 	int attack();
 };
 

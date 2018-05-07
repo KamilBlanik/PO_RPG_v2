@@ -67,25 +67,3 @@ std::vector<Skills*> Npc::getSkills() {
 	return skills;
 }
 
-Items* Npc::sell(Items* item) {
-	this->money+=item->getPrice();
-	return item;
-}
-
-int Npc::buy(Items* item) {
-	if (this->money - item->getPrice()<0)
-	{
-		return 0;
-	}
-	else {
-		this->money -= item->getPrice();
-		addItem(item);
-		return item->getPrice();
-	}
-	
-}
-Skills* Npc::learn(Skills* skill) {
-	this->money += skill->getPrice();
-	return skill;
-}
-

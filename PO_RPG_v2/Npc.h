@@ -17,24 +17,25 @@ private:
 public:
 	Npc(std::string name, std::string type, std::vector<Items*> items, std::vector<Skills*> skills, int money);
 	~Npc();
+	//settery, ustawiaja parametry w obiekcie klasy Npc
 	void setName(std::string name);
 	void setType(std::string type);
+	void setMoney(int money);
+	//dodawanie/usuwanie elemntow z wektorow obiektu klasy Npc
 	void addItem(Items* item);
 	void deleteItem(int i);
 	void addSkill(Skills* skill);
 	void deleteSkill(int i);
+	//ziwekszanie/ zmniejszanie wartosci money
 	void incraseMoney(int i);
 	void subbMoney(int i);
-	void setMoney(int money);
+	//gettery, pozyskuja parametry obiektu
 	int getMoney();
 	std::string getName();
 	std::string getType();
 	std::vector<Items*> getItems();
 	std::vector<Skills*> getSkills();
 
-	Items* sell(Items* item);
-	int buy(Items* item);
-	Skills* learn(Skills* skill);
 
 };
 

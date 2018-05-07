@@ -13,9 +13,10 @@ private:
 public:
 	GameManager();
 	~GameManager();
-	void killEnemy();
+	//przenosznie obiektu klasy Player do generowanej mapy
 	void goToDangeon(Player* player);
 	void goToCity(Player* player);
+	//gettery, pobieraja parametry klasy GameManager
 	MapGenerator* getMap();
 	Player* getPlayer();
 };
