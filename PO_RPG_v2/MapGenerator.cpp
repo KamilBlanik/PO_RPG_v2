@@ -38,11 +38,10 @@ std::vector<Npc*> MapGenerator::spawnNpcs(int count) {
 	std::vector<Items*> items;
 	std::vector<Skills*> skills;
 	std::vector<Npc*> npcs;
-	int money = 500;
 	srand(time(NULL));
 	for (int c = 0; c < count; c++)
 	{
-		
+		int money = rand() % 500 + 300;
 		int i = rand() % 2;
 		int j = rand() % 5;
 		switch (i)

@@ -6,16 +6,17 @@
 #include "Enemy.h"
 class LevelManager {
 private:
-	
-	void setMaxExp(Player* player);
+	int maxExpPerLevel;
+	int maxLevel;	
 public:
+	
 	LevelManager();
 	~LevelManager();
+	int getMaxLvl();
+	int getMaxExpPerLvl();
 	void getExp(Player* player,Enemy* enemy);
-	int maxExpPerLevel;
-	int maxLevel;
 	void levelUp(Player* player);
-	
+	void setMaxExp(Player* player);
 };
 
 #endif

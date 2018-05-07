@@ -1001,7 +1001,7 @@ namespace PORPGv2 {
 	}
 	private: void nextEnemy() {
 		this->listBox1->Items->Clear();
-
+		game->getPlayer()->addItemToBp(game->getMap()->getEnemies()[0]->dropItem());
 		std::string log = "Zabiles przeciwnika!";
 		updateBattleLog(log);
 		log = "Znalazles przy nim: "
@@ -1015,7 +1015,7 @@ namespace PORPGv2 {
 		this->button13->Enabled = true;
 		this->button14->Enabled = true;
 		lvl->getExp(game->getPlayer(), game->getMap()->getEnemies()[0]);
-		if (game->getPlayer()->getExp() >= lvl->maxExpPerLevel&&game->getPlayer()->getLevel() < lvl->maxLevel) {
+		if (game->getPlayer()->getExp() >= lvl->getMaxExpPerLvl() && game->getPlayer()->getLevel() < lvl->getMaxLvl()) {
 			log = "Awansowales!";
 			updateBattleLog(log);
 			lvl->levelUp(game->getPlayer());
@@ -1136,7 +1136,7 @@ namespace PORPGv2 {
 		std::string t = "Statystyki gracza: " + player->getName()
 			+ "\nPieniadze: " + std::to_string(player->getMoney())
 			+ "\nPoziom: " + std::to_string(player->getLevel())
-			+ "\nExp:" + std::to_string(player->getExp()) + "/" + std::to_string(lvl->maxExpPerLevel)
+			+ "\nExp:" + std::to_string(player->getExp()) + "/" + std::to_string(lvl->getMaxExpPerLvl())
 			+ "\nPunkty umiejetnosci: " + std::to_string(player->getSkillPoints())
 			+ "\nZycie: " + std::to_string(player->getHp() + player->getBonusHp())
 			+ "\nPancerz:	" + std::to_string(player->getArmor() + player->getBonusArmor())
@@ -1252,19 +1252,22 @@ namespace PORPGv2 {
 		FileManager *f = new FileManager();
 		file.open(f->savesName);
 		this->comboBox1->Items->Clear();
-		while (!file.eof()) {
-			getline(file, line);
-			const char *tmp = line.c_str();
-			System::String^ save = gcnew String(tmp);
-			this->comboBox1->Items->Add(save);
+		if (file.is_open()) {
+			while (!file.eof()) {
+				getline(file, line);
+				const char *tmp = line.c_str();
+				System::String^ save = gcnew String(tmp);
+				this->comboBox1->Items->Add(save);
 
+			}
+			file.close();
+			this->newGameButton->Visible = false;
+			this->loadButton->Visible = false;
+			this->exitButton->Visible = false;
+			this->comboBox1->Visible = true;
+			this->startGameButton->Visible = true;
 		}
-		file.close();
-		this->newGameButton->Visible = false;
-		this->loadButton->Visible = false;
-		this->exitButton->Visible = false;
-		this->comboBox1->Visible = true;
-		this->startGameButton->Visible = true;
+		
 	}
 	private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
@@ -1282,6 +1285,7 @@ namespace PORPGv2 {
 			std::string sname = msclr::interop::marshal_as<std::string>(name);
 			FileManager *file;
 			game->goToCity(file->loadGame(sname));
+			lvl->setMaxExp(file->loadGame(sname));
 			cityLayout();
 			generateCity();
 
@@ -1373,8 +1377,8 @@ namespace PORPGv2 {
 		showSkillInfo(this->label6, skill);
 	}
 	private: System::Void button1_Click_2(System::Object^  sender, System::EventArgs^  e) {
-		FileManager save;
-		save.saveGame(game->getPlayer(), game->getPlayer()->getName() + ".txt");
+		FileManager* save = new FileManager();
+		save->saveGame(game->getPlayer(), game->getPlayer()->getName() + ".txt");
 	}
 	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (game->getPlayer()->getSkillPoints() == 0)

@@ -11,6 +11,14 @@ LevelManager::~LevelManager() {
 	maxLevel = 0;
 }
 
+int LevelManager::getMaxLvl() {
+	return this->maxLevel;
+}
+
+int LevelManager::getMaxExpPerLvl() {
+	return this->maxExpPerLevel;
+}
+
 void LevelManager::levelUp(Player* player) {
 	player->increaseHp(50);
 	player->increaseMaxHp(50);
