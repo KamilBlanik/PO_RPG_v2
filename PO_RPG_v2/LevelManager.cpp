@@ -24,7 +24,7 @@ void LevelManager::levelUp(Player* player) {
 	player->increaseMaxHp(50);
 	player->increaseMana(10);
 	player->increaseMaxMana(10);
-	player->setDmg(player->getDmg() + 10);
+	player->setDmg(player->getDmg() + 5);
 	player->increaseLevel(1);
 	player->setSkillPoints(player->getSkillPoints() + 2);
 	player->setExp(player->getExp() - maxExpPerLevel);

@@ -5,18 +5,22 @@ std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
 	std::string name[5] = { "Gnom","Troll","Chochlik","Zywiolak","Golem" };
 	std::vector<Enemy*> enemies;
 	std::vector<Items*> loot;
+	std::vector<Skills*> skills;
 	Enemy* enemy = new Enemy();
 	Items* item = new Items();
+	Skills* skill;
 	int j;
 	//srand(time(NULL));
 	for (int i = 0; i < count; i++)
 	{
+		skill = new Skills();
 		enemy = new Enemy();
 		j = rand() % 5;
 		enemy->setName(name[j]);
 		enemy->setLevel(getDifficult());
 		enemy->setHp(enemy->getLevel() * 50 + 75);
 		enemy->setArmor(rand() % 5 + enemy->getLevel() * 5);
+		enemy->setBonusArmor(rand() % 3 + enemy->getLevel() * 2);
 		enemy->setDmg(rand() % 10 + 5 + 5 * enemy->getLevel());
 		enemy->setMana(rand() % 10 + 10 * enemy->getLevel());
 		int k = rand() % 5 + 1;
@@ -24,6 +28,12 @@ std::vector<Enemy*> MapGenerator::spawnEnemies(int count) {
 		{
 			item = generateItem();
 			loot.push_back(item);
+		}
+		int w = rand() % 3 + 1;
+		for (int x = 0; x < w; x++)
+		{
+			skill = generateSkill();
+			enemy->addSkill(skill);
 		}
 		enemy->setLoot(loot);
 		enemies.push_back(enemy);

@@ -1046,14 +1046,14 @@ namespace PORPGv2 {
 			std::string info = "Natrafiles na przeciwnika!\nNazwa: "
 				+ enemy->getName()
 				+ "\nPoziom: " + std::to_string(enemy->getLevel())
-				+ "\nZycie: " + std::to_string(enemy->getHp())
-				+ "\nMana: " + std::to_string(enemy->getMana());
+				+ "\nZycie: " + std::to_string(enemy->getHp()+enemy->getBonusHp())
+				+ "\nMana: " + std::to_string(enemy->getMana())
+				+ "\nPancerz: " + std::to_string(enemy->getArmor()+ enemy->getBonusArmor());
 			const char * inf = info.c_str();
 			System::String^ text = gcnew String(inf);
 			this->label5->Text = text;
 		}
 	}
-
 	private: void showItemInfo(System::Windows::Forms::Label^ label, Items* item) {
 		label->ResetText();
 		std::string info = "\n" + item->getName() + " " + item->getType() + "\nCena: " + std::to_string(item->getPrice()) + "\nObrazenia: " + std::to_string(item->getDmg()) + "\nBonusowe zycie: " + std::to_string(item->getHp()) + "\nBonusowa mana: " + std::to_string(item->getMana()) + "\nBonusowey pancerz: " + std::to_string(item->getArmor()) + "\nWymagany poziom: " + std::to_string(item->getItemLvl());
@@ -1061,7 +1061,6 @@ namespace PORPGv2 {
 		System::String^ tmp = gcnew String(text);
 		label->Text += tmp;
 	}
-
 	private: void showSkillInfo(System::Windows::Forms::Label^ label, Skills* skill) {
 		label->ResetText();
 		std::string info = "\n" + skill->getName()
@@ -1074,7 +1073,6 @@ namespace PORPGv2 {
 		System::String^ tmp = gcnew String(text);
 		label->Text += tmp;
 	}
-
 	private: void updateTraderInfo() {
 		this->comboBox4->Items->Clear();
 		this->comboBox5->Items->Clear();
@@ -1123,7 +1121,6 @@ namespace PORPGv2 {
 			this->label1->Text = tmp;
 		}
 	}
-
 	private: void updatePlayerInfo() {
 		Player* player = game->getPlayer();
 		player->getBonuses();
@@ -1164,57 +1161,20 @@ namespace PORPGv2 {
 			this->comboBox6->Items->Add(st);
 		}
 	}
-
 	private: void updateBattleLog(std::string log) {
-		//std::string log = "Rozpoczales walke z " + game->getMap()->getEnemies()[0]->getName();
+		//std::string logEntry = "Rozpoczales walke z " + game->getMap()->getEnemies()[0]->getName() + log;
 		const char* text = log.c_str();
 		System::String^ tmp = gcnew String(text);
 		this->listBox1->Items->Add(tmp);
 	}
+	private: void checkAlive() {
+		if (!game->getPlayer()->checkAlive()) {
+			menuLayout();
+			this->label4->Visible = true;
+			this->label4->Text = "PRZEGRALES!";
 
-	private: Items * getSelectedItemNpc(System::Windows::Forms::ComboBox^ comboBox) {
-		Items *item = new Items();
-		System::Object^ choose = comboBox->SelectedItem;
-		if (!choose) return item;
-		System::String^ name = choose->ToString();
-		std::string strname = msclr::interop::marshal_as<std::string>(name);
-		int i = strname[0] - 49;
-		choosenItem = i;
-		return game->getMap()->getNpcs()[choosenNpc]->getItems()[i];
+		}
 	}
-
-	private: Items * getSelectedItemPlayer(System::Windows::Forms::ComboBox^ comboBox) {
-		Items *item = new Items();
-		System::Object^ choose = comboBox->SelectedItem;
-		if (!choose) return item;
-		System::String^ name = choose->ToString();
-		std::string strname = msclr::interop::marshal_as<std::string>(name);
-		int i = strname[0] - 49;
-		choosenItem = i;
-		return game->getPlayer()->getBp()[i];
-	}
-
-	private: Skills * getSelectedSkillNpc(System::Windows::Forms::ComboBox^ comboBox) {
-		Skills* skill = new Skills();
-		System::Object^ choose = comboBox->SelectedItem;
-		if (!choose) return skill;
-		System::String^ name = choose->ToString();
-		std::string strname = msclr::interop::marshal_as<std::string>(name);
-		int i = strname[0] - 49;
-		choosenItem = i;
-		return game->getMap()->getNpcs()[choosenNpc]->getSkills()[i];
-	}
-	private: Skills * getSelectedSkillPlayer(System::Windows::Forms::ComboBox^ comboBox) {
-		Skills* skill = new Skills();
-		System::Object^ choose = comboBox->SelectedItem;
-		if (!choose) return skill;
-		System::String^ name = choose->ToString();
-		std::string strname = msclr::interop::marshal_as<std::string>(name);
-		int i = strname[0] - 49;
-		choosenItem = i;
-		return game->getPlayer()->getSkills()[i];
-	}
-
 	private: void enemyTour() {
 		if (game->getMap()->getEnemies()[0]->incrasedArmor)
 		{
@@ -1234,6 +1194,46 @@ namespace PORPGv2 {
 		}
 
 
+	}
+	private: Items * getSelectedItemNpc(System::Windows::Forms::ComboBox^ comboBox) {
+		Items *item = new Items();
+		System::Object^ choose = comboBox->SelectedItem;
+		if (!choose) return item;
+		System::String^ name = choose->ToString();
+		std::string strname = msclr::interop::marshal_as<std::string>(name);
+		int i = strname[0] - 49;
+		choosenItem = i;
+		return game->getMap()->getNpcs()[choosenNpc]->getItems()[i];
+	}
+	private: Items * getSelectedItemPlayer(System::Windows::Forms::ComboBox^ comboBox) {
+		Items *item = new Items();
+		System::Object^ choose = comboBox->SelectedItem;
+		if (!choose) return item;
+		System::String^ name = choose->ToString();
+		std::string strname = msclr::interop::marshal_as<std::string>(name);
+		int i = strname[0] - 49;
+		choosenItem = i;
+		return game->getPlayer()->getBp()[i];
+	}
+	private: Skills * getSelectedSkillNpc(System::Windows::Forms::ComboBox^ comboBox) {
+		Skills* skill = new Skills();
+		System::Object^ choose = comboBox->SelectedItem;
+		if (!choose) return skill;
+		System::String^ name = choose->ToString();
+		std::string strname = msclr::interop::marshal_as<std::string>(name);
+		int i = strname[0] - 49;
+		choosenItem = i;
+		return game->getMap()->getNpcs()[choosenNpc]->getSkills()[i];
+	}
+	private: Skills * getSelectedSkillPlayer(System::Windows::Forms::ComboBox^ comboBox) {
+		Skills* skill = new Skills();
+		System::Object^ choose = comboBox->SelectedItem;
+		if (!choose) return skill;
+		System::String^ name = choose->ToString();
+		std::string strname = msclr::interop::marshal_as<std::string>(name);
+		int i = strname[0] - 49;
+		choosenItem = i;
+		return game->getPlayer()->getSkills()[i];
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->startButton->Visible = true;
@@ -1267,7 +1267,7 @@ namespace PORPGv2 {
 			this->comboBox1->Visible = true;
 			this->startGameButton->Visible = true;
 		}
-		
+
 	}
 	private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
@@ -1291,14 +1291,6 @@ namespace PORPGv2 {
 
 		}
 
-	}
-	private: void checkAlive() {
-		if (!game->getPlayer()->checkAlive()) {
-			menuLayout();
-			this->label4->Visible = true;
-			this->label4->Text = "PRZEGRALES!";
-
-		}
 	}
 	private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
 		System::Object^ name = textBox1->Text;
@@ -1366,12 +1358,10 @@ namespace PORPGv2 {
 		Items* item = getSelectedItemNpc(this->comboBox4);
 		showItemInfo(this->label2, item);
 	}
-
 	private: System::Void button9_Click(System::Object^  sender, System::EventArgs^  e) {
 		Items* item = getSelectedItemPlayer(this->comboBox3);
 		showItemInfo(this->label3, item);
 	}
-
 	private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) {
 		Skills* skill = getSelectedSkillNpc(this->comboBox5);
 		showSkillInfo(this->label6, skill);
@@ -1411,7 +1401,7 @@ namespace PORPGv2 {
 
 		}
 		else {
-			game->getPlayer()->setDmg(game->getPlayer()->getDmg() + 10);
+			game->getPlayer()->setDmg(game->getPlayer()->getDmg() + 5);
 			game->getPlayer()->setSkillPoints(game->getPlayer()->getSkillPoints() - 1);
 			updatePlayerInfo();
 		}
