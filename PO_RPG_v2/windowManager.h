@@ -214,7 +214,7 @@ namespace PORPGv2 {
 				 this->startGameButton->Name = L"startGameButton";
 				 this->startGameButton->Size = System::Drawing::Size(200, 75);
 				 this->startGameButton->TabIndex = 4;
-				 this->startGameButton->Text = L"Start";
+				 this->startGameButton->Text = L"Wroc";
 				 this->startGameButton->UseVisualStyleBackColor = true;
 				 this->startGameButton->Visible = false;
 				 this->startGameButton->Click += gcnew System::EventHandler(this, &windowManager::startGameButton_Click);
@@ -224,15 +224,16 @@ namespace PORPGv2 {
 				 this->comboBox1->FormattingEnabled = true;
 				 this->comboBox1->Location = System::Drawing::Point(400, 220);
 				 this->comboBox1->Name = L"comboBox1";
-				 this->comboBox1->Size = System::Drawing::Size(199, 24);
+				 this->comboBox1->Size = System::Drawing::Size(199, 21);
 				 this->comboBox1->TabIndex = 5;
 				 this->comboBox1->Visible = false;
+				 this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &windowManager::comboBox1_SelectedIndexChanged);
 				 // 
 				 // textBox1
 				 // 
 				 this->textBox1->Location = System::Drawing::Point(392, 331);
 				 this->textBox1->Name = L"textBox1";
-				 this->textBox1->Size = System::Drawing::Size(216, 22);
+				 this->textBox1->Size = System::Drawing::Size(216, 20);
 				 this->textBox1->TabIndex = 6;
 				 this->textBox1->Text = L"Wprowadz imie Twojego bohatera";
 				 this->textBox1->Visible = false;
@@ -368,7 +369,7 @@ namespace PORPGv2 {
 				 this->comboBox2->FormattingEnabled = true;
 				 this->comboBox2->Location = System::Drawing::Point(243, 40);
 				 this->comboBox2->Name = L"comboBox2";
-				 this->comboBox2->Size = System::Drawing::Size(161, 24);
+				 this->comboBox2->Size = System::Drawing::Size(161, 21);
 				 this->comboBox2->TabIndex = 16;
 				 this->comboBox2->Text = L"Wybierz NPC";
 				 this->comboBox2->Visible = false;
@@ -378,7 +379,7 @@ namespace PORPGv2 {
 				 this->comboBox3->FormattingEnabled = true;
 				 this->comboBox3->Location = System::Drawing::Point(234, 617);
 				 this->comboBox3->Name = L"comboBox3";
-				 this->comboBox3->Size = System::Drawing::Size(161, 24);
+				 this->comboBox3->Size = System::Drawing::Size(161, 21);
 				 this->comboBox3->TabIndex = 17;
 				 this->comboBox3->Text = L"Wybierz przedmiot";
 				 this->comboBox3->Visible = false;
@@ -388,7 +389,7 @@ namespace PORPGv2 {
 				 this->comboBox4->FormattingEnabled = true;
 				 this->comboBox4->Location = System::Drawing::Point(234, 689);
 				 this->comboBox4->Name = L"comboBox4";
-				 this->comboBox4->Size = System::Drawing::Size(161, 24);
+				 this->comboBox4->Size = System::Drawing::Size(161, 21);
 				 this->comboBox4->TabIndex = 18;
 				 this->comboBox4->Text = L"Wybierz przedmiot";
 				 this->comboBox4->Visible = false;
@@ -426,7 +427,7 @@ namespace PORPGv2 {
 				 this->label1->AutoSize = true;
 				 this->label1->Location = System::Drawing::Point(240, 80);
 				 this->label1->Name = L"label1";
-				 this->label1->Size = System::Drawing::Size(164, 68);
+				 this->label1->Size = System::Drawing::Size(124, 52);
 				 this->label1->TabIndex = 21;
 				 this->label1->Text = L"Imie:\r\nKto to:\r\nIlosc pieniedzy:\r\nPrzedmioty/umiejetnosci:";
 				 this->label1->Visible = false;
@@ -436,7 +437,7 @@ namespace PORPGv2 {
 				 this->label2->AutoSize = true;
 				 this->label2->Location = System::Drawing::Point(12, 100);
 				 this->label2->Name = L"label2";
-				 this->label2->Size = System::Drawing::Size(219, 17);
+				 this->label2->Size = System::Drawing::Size(164, 13);
 				 this->label2->TabIndex = 22;
 				 this->label2->Text = L"Statystyki przedmiotu do kupienia";
 				 this->label2->Visible = false;
@@ -446,7 +447,7 @@ namespace PORPGv2 {
 				 this->label3->AutoSize = true;
 				 this->label3->Location = System::Drawing::Point(12, 414);
 				 this->label3->Name = L"label3";
-				 this->label3->Size = System::Drawing::Size(236, 17);
+				 this->label3->Size = System::Drawing::Size(175, 13);
 				 this->label3->TabIndex = 23;
 				 this->label3->Text = L"Statystyki przedmiotu do sprzedania";
 				 this->label3->Visible = false;
@@ -540,7 +541,7 @@ namespace PORPGv2 {
 					 static_cast<System::Byte>(238)));
 				 this->label4->Location = System::Drawing::Point(395, 9);
 				 this->label4->Name = L"label4";
-				 this->label4->Size = System::Drawing::Size(171, 25);
+				 this->label4->Size = System::Drawing::Size(137, 20);
 				 this->label4->TabIndex = 30;
 				 this->label4->Text = L"Trafiles do miasta:";
 				 this->label4->Visible = false;
@@ -550,7 +551,7 @@ namespace PORPGv2 {
 				 this->label5->AutoSize = true;
 				 this->label5->Location = System::Drawing::Point(421, 80);
 				 this->label5->Name = L"label5";
-				 this->label5->Size = System::Drawing::Size(168, 51);
+				 this->label5->Size = System::Drawing::Size(128, 39);
 				 this->label5->TabIndex = 31;
 				 this->label5->Text = L"Natrafiles na przeciwnika!\r\nNazwa:\r\nPoziom:";
 				 this->label5->Visible = false;
@@ -574,7 +575,7 @@ namespace PORPGv2 {
 				 this->comboBox5->FormattingEnabled = true;
 				 this->comboBox5->Location = System::Drawing::Point(603, 649);
 				 this->comboBox5->Name = L"comboBox5";
-				 this->comboBox5->Size = System::Drawing::Size(161, 24);
+				 this->comboBox5->Size = System::Drawing::Size(161, 21);
 				 this->comboBox5->TabIndex = 33;
 				 this->comboBox5->Text = L"Wybierz przedmiot";
 				 this->comboBox5->Visible = false;
@@ -598,7 +599,7 @@ namespace PORPGv2 {
 				 this->label6->AutoSize = true;
 				 this->label6->Location = System::Drawing::Point(421, 256);
 				 this->label6->Name = L"label6";
-				 this->label6->Size = System::Drawing::Size(212, 17);
+				 this->label6->Size = System::Drawing::Size(161, 13);
 				 this->label6->TabIndex = 35;
 				 this->label6->Text = L"Statystyki zaklecia do nauczenia";
 				 this->label6->Visible = false;
@@ -608,7 +609,7 @@ namespace PORPGv2 {
 				 this->label7->AutoSize = true;
 				 this->label7->Location = System::Drawing::Point(767, 189);
 				 this->label7->Name = L"label7";
-				 this->label7->Size = System::Drawing::Size(115, 17);
+				 this->label7->Size = System::Drawing::Size(87, 13);
 				 this->label7->TabIndex = 36;
 				 this->label7->Text = L"Statystyki gracza";
 				 this->label7->Visible = false;
@@ -660,7 +661,7 @@ namespace PORPGv2 {
 				 this->label8->AutoSize = true;
 				 this->label8->Location = System::Drawing::Point(215, 414);
 				 this->label8->Name = L"label8";
-				 this->label8->Size = System::Drawing::Size(270, 17);
+				 this->label8->Size = System::Drawing::Size(201, 13);
 				 this->label8->TabIndex = 40;
 				 this->label8->Text = L"Sprawdz statystyki przedmiotu do ubrania";
 				 this->label8->Visible = false;
@@ -670,7 +671,7 @@ namespace PORPGv2 {
 				 this->label9->AutoSize = true;
 				 this->label9->Location = System::Drawing::Point(421, 414);
 				 this->label9->Name = L"label9";
-				 this->label9->Size = System::Drawing::Size(125, 17);
+				 this->label9->Size = System::Drawing::Size(94, 13);
 				 this->label9->TabIndex = 41;
 				 this->label9->Text = L"Aktualnie ubierany";
 				 this->label9->Visible = false;
@@ -694,7 +695,7 @@ namespace PORPGv2 {
 				 this->comboBox6->FormattingEnabled = true;
 				 this->comboBox6->Location = System::Drawing::Point(624, 376);
 				 this->comboBox6->Name = L"comboBox6";
-				 this->comboBox6->Size = System::Drawing::Size(140, 24);
+				 this->comboBox6->Size = System::Drawing::Size(140, 21);
 				 this->comboBox6->TabIndex = 43;
 				 this->comboBox6->Text = L"Wybierz przedmiot";
 				 this->comboBox6->Visible = false;
@@ -702,10 +703,9 @@ namespace PORPGv2 {
 				 // listBox1
 				 // 
 				 this->listBox1->FormattingEnabled = true;
-				 this->listBox1->ItemHeight = 16;
 				 this->listBox1->Location = System::Drawing::Point(395, 216);
 				 this->listBox1->Name = L"listBox1";
-				 this->listBox1->Size = System::Drawing::Size(212, 340);
+				 this->listBox1->Size = System::Drawing::Size(212, 329);
 				 this->listBox1->TabIndex = 44;
 				 this->listBox1->Visible = false;
 				 // 
@@ -714,7 +714,7 @@ namespace PORPGv2 {
 				 this->comboBox7->FormattingEnabled = true;
 				 this->comboBox7->Location = System::Drawing::Point(504, 608);
 				 this->comboBox7->Name = L"comboBox7";
-				 this->comboBox7->Size = System::Drawing::Size(156, 24);
+				 this->comboBox7->Size = System::Drawing::Size(156, 21);
 				 this->comboBox7->TabIndex = 45;
 				 this->comboBox7->Text = L"Wybierz przedmiot";
 				 this->comboBox7->Visible = false;
@@ -725,7 +725,7 @@ namespace PORPGv2 {
 				 this->label10->AutoSize = true;
 				 this->label10->Location = System::Drawing::Point(613, 517);
 				 this->label10->Name = L"label10";
-				 this->label10->Size = System::Drawing::Size(120, 17);
+				 this->label10->Size = System::Drawing::Size(92, 13);
 				 this->label10->TabIndex = 46;
 				 this->label10->Text = L"Wybrane zaklecie";
 				 this->label10->Visible = false;
@@ -1251,7 +1251,7 @@ namespace PORPGv2 {
 		std::ifstream file;
 		std::string line;
 		FileManager *f = new FileManager();
-		file.open(f->savesName);
+		file.open(f->getSavesName());
 		this->comboBox1->Items->Clear();
 		if (file.is_open()) {
 			while (!file.eof()) {
@@ -1262,6 +1262,7 @@ namespace PORPGv2 {
 
 			}
 			file.close();
+			this->startGameButton->Text = L"Wroc";
 			this->newGameButton->Visible = false;
 			this->loadButton->Visible = false;
 			this->exitButton->Visible = false;
@@ -1526,5 +1527,8 @@ namespace PORPGv2 {
 		Skills* skill = getSelectedSkillPlayer(this->comboBox7);
 		showSkillInfo(this->label10, skill);
 	}
-	};
+	private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+		this->startGameButton->Text = L"Start";
+	}
+};
 }

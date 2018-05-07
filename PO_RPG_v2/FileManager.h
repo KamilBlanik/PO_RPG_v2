@@ -7,13 +7,14 @@
 
 class FileManager {
 private:
-	
-public:
 	std::string savesName;
+public:
+	
 	FileManager();
 	~FileManager();
 	void saveGame(Player* player, std::string fileName);
 	Player* loadGame(std::string fileName);
+	std::string getSavesName();
 };
 
 #endif

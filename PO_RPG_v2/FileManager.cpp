@@ -83,3 +83,7 @@ Player * FileManager::loadGame(std::string fileName) {
 	delete tmp;
 }
 
+std::string FileManager::getSavesName() {
+	return this->savesName;
+}
+
